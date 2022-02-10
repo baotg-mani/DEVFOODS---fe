@@ -415,7 +415,7 @@ $(document).ready(function () {
           var bNewProduct = $(`
               <div class="col-md-6 col-lg-3 ">
                 <div class="product">
-                  <a href="#" class="img-prod"><img class="img-fluid" src=${resProducts[bI].image} alt="Colorlib Template">
+                  <a href="/shop24h-frontend/vegefoods-master/product-single.html?id=${resProducts[bI].id}" class="img-prod" ><img class="img-fluid" src=${resProducts[bI].image} alt="Colorlib Template">
                     <div class="overlay"></div>
                   </a>
                   <div class="text py-3 pb-4 px-3 text-center">
@@ -473,7 +473,7 @@ $(document).ready(function () {
             var bNewProduct = $(`
                   <div class="col-md-6 col-lg-3 ">
                     <div class="product">
-                      <a href="#" class="img-prod"><img class="img-fluid" src=${resProducts[bI].image} alt="Colorlib Template">
+                      <a href="/shop24h-frontend/vegefoods-master/product-single.html?id=${resProducts[bI].id}" class="img-prod"><img class="img-fluid" src=${resProducts[bI].image} alt="Colorlib Template">
                         <div class="overlay"></div>
                       </a>
                       <div class="text py-3 pb-4 px-3 text-center">
@@ -549,7 +549,7 @@ $(document).ready(function () {
           var bNewProduct = $(`
             <div class="col-md-6 col-lg-3 ">
               <div class="product">
-                <a href="#" class="img-prod"><img class="img-fluid" src=${resProducts[bI].image} alt="Colorlib Template">
+                <a href="/shop24h-frontend/vegefoods-master/product-single.html?id=${resProducts[bI].id}" class="img-prod" ><img class="img-fluid" src=${resProducts[bI].image} alt="Colorlib Template">
                   <div class="overlay"></div>
                 </a>
                 <div class="text py-3 pb-4 px-3 text-center">
@@ -611,7 +611,7 @@ $(document).ready(function () {
           var bNewProduct = $(`
             <div class="col-md-6 col-lg-3 ">
               <div class="product">
-                <a href="#" class="img-prod"><img class="img-fluid" src=${resProducts[bI].image} alt="Colorlib Template">
+                <a href="/shop24h-frontend/vegefoods-master/product-single.html?id=${resProducts[bI].id}" class="img-prod" ><img class="img-fluid" src=${resProducts[bI].image} alt="Colorlib Template">
                   <div class="overlay"></div>
                 </a>
                 <div class="text py-3 pb-4 px-3 text-center">
@@ -673,7 +673,7 @@ $(document).ready(function () {
           var bNewProduct = $(`
             <div class="col-md-6 col-lg-3 ">
               <div class="product">
-                <a href="#" class="img-prod"><img class="img-fluid" src=${resProducts[bI].image} alt="Colorlib Template">
+                <a href="/shop24h-frontend/vegefoods-master/product-single.html?id=${resProducts[bI].id}" class="img-prod" ><img class="img-fluid" src=${resProducts[bI].image} alt="Colorlib Template">
                   <div class="overlay"></div>
                 </a>
                 <div class="text py-3 pb-4 px-3 text-center">
@@ -736,8 +736,8 @@ $(document).ready(function () {
           var bNewProduct = $(`
             <div class="col-md-6 col-lg-3 ">
               <div class="product">
-                <a href="#" class="img-prod"><img class="img-fluid" src=${resProducts[bI].image} alt="Colorlib Template">
-                  <div class="overlay"></div>
+                <a href="/shop24h-frontend/vegefoods-master/product-single.html?id=${resProducts[bI].id}"><img class="img-fluid" src=${resProducts[bI].image} alt="Colorlib Template">
+                <div cl" class="img-prod" data-id="ass="overlay"></div>
                 </a>
                 <div class="text py-3 pb-4 px-3 text-center">
                   <h3><a href="#">${resProducts[bI].productName}</a></h3>
@@ -782,7 +782,7 @@ $(document).ready(function () {
       var bNewProduct = $(`
             <div class="col-md-6 col-lg-3 ">
               <div class="product">
-                <a href="#" class="img-prod"><img class="img-fluid" src=${vLowToHighArr[bI].image} alt="Colorlib Template">
+                <a href="/shop24h-frontend/vegefoods-master/product-single.html?id=${vLowToHighArr[bI].id}" class="img-prod" ><img class="img-fluid" src=${vLowToHighArr[bI].image} alt="Colorlib Template">
                   <div class="overlay"></div>
                 </a>
                 <div class="text py-3 pb-4 px-3 text-center">
@@ -825,7 +825,7 @@ $(document).ready(function () {
       var bNewProduct = $(`
             <div class="col-md-6 col-lg-3 ">
               <div class="product">
-                <a href="#" class="img-prod"><img class="img-fluid" src=${vHighToLowArr[bI].image} alt="Colorlib Template">
+                <a href="/shop24h-frontend/vegefoods-master/product-single.html?id=${vHighToLowArr[bI].id}" class="img-prod" ><img class="img-fluid" src=${vHighToLowArr[bI].image} alt="Colorlib Template">
                   <div class="overlay"></div>
                 </a>
                 <div class="text py-3 pb-4 px-3 text-center">
@@ -877,7 +877,7 @@ $(document).ready(function () {
       var bNewProduct = $(`
             <div class="col-md-6 col-lg-3 ">
               <div class="product">
-                <a href="#" class="img-prod"><img class="img-fluid" src=${vFilterResult[bI].image} alt="Colorlib Template">
+                <a href="/shop24h-frontend/vegefoods-master/product-single.html?id=${vFilterResult[bI].id}" class="img-prod" ><img class="img-fluid" src=${vFilterResult[bI].image} alt="Colorlib Template">
                   <div class="overlay"></div>
                 </a>
                 <div class="text py-3 pb-4 px-3 text-center">
