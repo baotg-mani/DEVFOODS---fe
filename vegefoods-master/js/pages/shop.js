@@ -343,8 +343,11 @@ AOS.init({
 })(jQuery);
 
 
+
+
 //---------------------------------------
 //---------------------------------------
+
 $(document).ready(function () {
   /*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
   var gProducts = [];
@@ -354,6 +357,21 @@ $(document).ready(function () {
   const gDRIED = "Dried";
   const gALL = "All";
   var gProductType = gALL;
+
+  // khai báo biến lưu trữ các product vào cart
+  var gCartArr = [];
+
+  // kiểm tra browser có hỗ trợ local storage hay không
+  if (typeof (Storage) !== 'undefined') {
+    //Nếu có hỗ trợ
+    //Thực hiện khởi tạo localStorage cart (chữa dữ liệu giỏ hàng)
+    localStorage.cart = "";
+
+  } else {
+    //Nếu không hỗ trợ
+    alert('Trình duyệt của bạn không hỗ trợ Storage');
+  }
+
 
   /*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */
   onPageLoading();
@@ -387,6 +405,12 @@ $(document).ready(function () {
 
   // gán sự kiện khi click btn Filter
   $("#btn-filter").on("click", onBtnFilterClick);
+
+  // gán sự kiện khi click icon buy-now
+  $(document).on("click", ".buy-now", function () {
+    onIconBuyNowClick(this);
+  });
+
 
   /*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
   // Hàm xử lý sự kiện load trang
@@ -430,7 +454,7 @@ $(document).ready(function () {
                         <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                           <span><i class="ion-ios-menu"></i></span>
                         </a>
-                        <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                        <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1" data-obj='${JSON.stringify(resProducts[bI])}'>
                           <span><i class="ion-ios-cart"></i></span>
                         </a>
                         <a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -488,7 +512,7 @@ $(document).ready(function () {
                             <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                               <span><i class="ion-ios-menu"></i></span>
                             </a>
-                            <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                            <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1" data-obj='${JSON.stringify(resProducts[bI])}'>
                               <span><i class="ion-ios-cart"></i></span>
                             </a>
                             <a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -564,7 +588,7 @@ $(document).ready(function () {
                       <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                         <span><i class="ion-ios-menu"></i></span>
                       </a>
-                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1" data-obj='${JSON.stringify(resProducts[bI])}'>
                         <span><i class="ion-ios-cart"></i></span>
                       </a>
                       <a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -626,7 +650,7 @@ $(document).ready(function () {
                       <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                         <span><i class="ion-ios-menu"></i></span>
                       </a>
-                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1" data-obj='${JSON.stringify(resProducts[bI])}'>
                         <span><i class="ion-ios-cart"></i></span>
                       </a>
                       <a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -688,7 +712,7 @@ $(document).ready(function () {
                       <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                         <span><i class="ion-ios-menu"></i></span>
                       </a>
-                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1" data-obj='${JSON.stringify(resProducts[bI])}'>
                         <span><i class="ion-ios-cart"></i></span>
                       </a>
                       <a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -751,7 +775,7 @@ $(document).ready(function () {
                       <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                         <span><i class="ion-ios-menu"></i></span>
                       </a>
-                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1" data-obj='${JSON.stringify(resProducts[bI])}'>
                         <span><i class="ion-ios-cart"></i></span>
                       </a>
                       <a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -797,7 +821,7 @@ $(document).ready(function () {
                       <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                         <span><i class="ion-ios-menu"></i></span>
                       </a>
-                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1" data-obj='${JSON.stringify(vLowToHighArr[bI])}'>
                         <span><i class="ion-ios-cart"></i></span>
                       </a>
                       <a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -840,7 +864,7 @@ $(document).ready(function () {
                       <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                         <span><i class="ion-ios-menu"></i></span>
                       </a>
-                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1" data-obj='${JSON.stringify(vHighToLowArr[bI])}'>
                         <span><i class="ion-ios-cart"></i></span>
                       </a>
                       <a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -892,7 +916,7 @@ $(document).ready(function () {
                       <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                         <span><i class="ion-ios-menu"></i></span>
                       </a>
-                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                      <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1" data-obj='${JSON.stringify(vFilterResult[bI])}'>
                         <span><i class="ion-ios-cart"></i></span>
                       </a>
                       <a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -907,7 +931,20 @@ $(document).ready(function () {
     }
   }
 
-  /*** REGION 4 - Common funtions - Vùng khai báo hàm dùng chung trong toàn bộ chương trình*/
+  // Hàm xử lý sự kiện click icon buy-now
+  function onIconBuyNowClick(paramIconBuyNow) {
+    // thu thập dữ liệu obj của product được chọn
+    var vProductObj = JSON.parse(paramIconBuyNow.dataset.obj);
+    // lưu vào biến mảng giỏ hàng
+    gCartArr.push(vProductObj);
+    // convert sang json string lưu vào localStorage
+    localStorage.cart = JSON.stringify(gCartArr);
+    // xử lý hiển thị lên icon trên thanh thông báo
+    $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
+  }
+
+
+  /*** REGION 4 - Common functions - Vùng khai báo hàm dùng chung trong toàn bộ chương trình*/
   // Hàm reset dữ liệu
   function resetData() {
     gProducts = [];
