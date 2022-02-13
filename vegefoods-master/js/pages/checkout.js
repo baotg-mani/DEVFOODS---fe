@@ -348,30 +348,16 @@ AOS.init({
 //---------------------------------------
 
 $(document).ready(function () {
+
   /*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
   var gCartArr = [];
-  var gTotal = 0;
-  var gDistinctArr = [];
-
 
   /*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */
   // thực thi sự kiện load trang
   onPageLoading();
 
-  // gán sự kiện click btn plus của mỗi sản phẩm
-  $(document).on("click", ".btn_plus", function (e) {
-    // Stop acting like a button
-    e.preventDefault();
-    onBtnPlusClick(this)
-  });
-
-  // gán sự kiện click btn minus của mỗi sản phẩm
-  $(document).on("click", ".btn_minus", function (e) {
-    // Stop acting like a button
-    e.preventDefault();
-    onBtnMinusClick(this)
-  });
-
+  // gán sự kiện click btn Place Order
+  $("#btn-place").on("click", onBtnPlaceClick);
 
 
   /*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
@@ -383,68 +369,6 @@ $(document).ready(function () {
     console.log(gCartArr);
     // hiển thị lên icon cart thông báo
     $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
-
-    // load các danh mục sp trong giỏ hàng ra danh sách
-    // lấy ra mảng các phần tử riêng biệt
-    for (let i = 0; i < gCartArr.length; i++) {
-      for (let j = 0; j <= i; j++) {
-        if (j == i) {
-          gDistinctArr.push(gCartArr[i]);
-        }
-        if (gCartArr[i].id == gCartArr[j].id) {
-          break;
-        }
-      }
-    }
-    console.log(gDistinctArr);
-
-    // lặp đếm các phần tử cùng id và in ra danh sách các phần tử (sản phẩm) ra front-end
-    for (let i = 0; i < gDistinctArr.length; i++) {
-      var count = 0;
-      for (let j = 0; j < gCartArr.length; j++) {
-        if (gCartArr[j].id == gDistinctArr[i].id) {
-          count++;
-        }
-      }
-      var vNewProduct = $(`
-        <tr class="text-center">
-          <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-          <td class="image-prod">
-            <div class="img" style="background-image:url(${gDistinctArr[i].image});"></div>
-          </td>
-
-          <td class="product-name">
-            <h3>${gDistinctArr[i].productName}</h3>
-            <p>Far far away, behind the word mountains, far from the countries</p>
-          </td>
-
-          <td class="price">${gDistinctArr[i].buyPrice}</td>
-
-          <td class="quantity">
-            <div class="input-group mb-3 d-flex">
-              <span class="input-group-btn mr-2">
-                <button type="button" class="quantity-left-minus btn rounded-0 shadow-none btn_minus" data-type="minus"
-                  data-field="" data-id=${gDistinctArr[i].id}>
-                  <i class="ion-ios-remove"></i>
-                </button>
-              </span>
-              <input type="text" name="quantity" class="quantity form-control input-number" value=${count}
-                min="1" max="100">
-              <span class="input-group-btn ml-2">
-                <button type="button" class="quantity-right-plus btn rounded-0 shadow-none btn_plus" data-type="plus"
-                  data-field="" data-id=${gDistinctArr[i].id}>
-                  <i class="ion-ios-add"></i>
-                </button>
-              </span>
-            </div>
-          </td>
-
-          <td class="total">${gDistinctArr[i].buyPrice * count}</td>
-        </tr>
-      `).appendTo($("#tbody-cart"));
-    }
-
     // hiển thị tổng giá giỏ hàng
     var vSum = 0;
     for (let i = 0; i < gCartArr.length; i++) {
@@ -455,68 +379,24 @@ $(document).ready(function () {
     $("#cart-total").html("$" + gTotal + ".00");
   }
 
-
-  // Hàm xử lý sự kiện click .btn_plus
-  function onBtnPlusClick(paramPlus) {
-    // update quantity
-    var vInpQuantityElement = $(paramPlus).parents("div").children("input");
-    vInpQuantityElement.val(parseInt(vInpQuantityElement.val()) + 1);
-
-    // update total price of product
-    var vTotalProduct = $(paramPlus).parents("tr").children("td:nth-child(6)");  //maybe query like this
-    var vPriceProduct = $(paramPlus).closest("tr").find("td:nth-child(4)");      //or like this
-    vTotalProduct.text(parseInt(vTotalProduct.text()) + parseInt(vPriceProduct.text()));
-
-    // update total cart
-    gTotal += parseInt(vPriceProduct.text());
-    $("#cart-subtotal").html("$" + gTotal + ".00");
-    $("#cart-total").html("$" + gTotal + ".00");
-
-    // update cart in localStorage
-    var vProduct = gDistinctArr.filter(e => e.id == paramPlus.dataset.id);
-    gCartArr.push(vProduct.find(e => vProduct.indexOf(e) == 0));                 // dùng .find để chuyển mảng 1 phần tử về 1 obj
-    localStorage.cart = JSON.stringify(gCartArr);
-
-    // update lên icon thông báo
-    $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
-
+  // Hàm xử lý sự kiện click btn Place Order (thanh toán)
+  function onBtnPlaceClick() {
+    //B0: khai báo biến lưu trữ dữ liệu
+    // biến lưu trữ dữ liệu customer
+    var vCustomerObj = {
+      address: "",
+      city: "",
+      country: "",
+      creditLimit: "",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      postalCode: "",
+      salesRepEmployeeNumber: "",
+      state: ""
+    }
+    // biến lưu trữ dữ liệu order
   }
-
-
-  // Hàm xử lý sự kiện click .btn_minus
-  function onBtnMinusClick(paramMinus) {
-    // update quantity
-    var vInpQuantityElement = $(paramMinus).parents("div").children("input");
-    if (vInpQuantityElement.val() > 0) {
-      vInpQuantityElement.val(parseInt(vInpQuantityElement.val()) - 1);
-    }
-
-    // update total price of product
-    var vTotalProduct = $(paramMinus).parents("tr").children("td:nth-child(6)");  //maybe query like this
-    var vPriceProduct = $(paramMinus).closest("tr").find("td:nth-child(4)");      //or like this
-
-    // update total cart
-    if (gTotal > 0 && parseInt(vTotalProduct.text()) > 0) {
-      gTotal -= parseInt(vPriceProduct.text());
-      $("#cart-subtotal").html("$" + gTotal + ".00");
-      $("#cart-total").html("$" + gTotal + ".00");
-
-      // update cart in localStorage
-      var vProduct = gDistinctArr.filter(e => e.id == paramMinus.dataset.id);     // return arr have 1 element
-      var vProductObj = vProduct.find(e => vProduct.indexOf(e) == 0);             // convert arr 1 e to obj
-      gCartArr.splice(gCartArr.indexOf(vProductObj), 1);
-      console.log(gCartArr)
-      localStorage.cart = JSON.stringify(gCartArr);
-
-      // update lên icon thông báo
-      $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
-    }
-    if (parseInt(vTotalProduct.text()) > 0) {
-      vTotalProduct.text(parseInt(vTotalProduct.text()) - parseInt(vPriceProduct.text()));
-    }
-
-  }
-
 
 
   /*** REGION 4 - Common funtions - Vùng khai báo hàm dùng chung trong toàn bộ chương trình*/
