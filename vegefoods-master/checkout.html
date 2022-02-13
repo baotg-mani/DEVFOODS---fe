@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+	<title>Devfoods</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -57,7 +57,7 @@
 	</div>
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="index.html">Vegefoods</a>
+			<a class="navbar-brand" href="index.html">Devfoods</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
 				aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="oi oi-menu"></span> Menu
@@ -80,7 +80,7 @@
 					<li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 					<li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
 					<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-					<li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span
+					<li class="nav-item cta cta-colored"><a id="number-of-products" href="cart.html" class="nav-link"><span
 								class="icon-shopping_cart"></span>[0]</a></li>
 
 				</ul>
@@ -109,69 +109,67 @@
 						<div class="row align-items-end">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="firstname">Firt Name</label>
-									<input type="text" class="form-control" placeholder="">
+									<label for="firstname">Firt Name *</label>
+									<input type="text" class="form-control" placeholder="Firstname.." id="inp-firstname">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="lastname">Last Name</label>
-									<input type="text" class="form-control" placeholder="">
+									<label for="lastname">Last Name *</label>
+									<input type="text" class="form-control" placeholder="Lastname.." id="inp-lastname">
 								</div>
 							</div>
 							<div class="w-100"></div>
 							<div class="col-md-12">
 								<div class="form-group">
 									<label for="country">State / Country</label>
-									<div class="select-wrap">
-										<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-										<select name="" id="" class="form-control">
-											<option value="">France</option>
-											<option value="">Italy</option>
-											<option value="">Philippines</option>
-											<option value="">South Korea</option>
-											<option value="">Hongkong</option>
-											<option value="">Japan</option>
-										</select>
-									</div>
+									<input type="text" class="form-control" placeholder="Country.." id="inp-country">
 								</div>
 							</div>
 							<div class="w-100"></div>
-							<div class="col-md-6">
+							<div class="col-md-12">
 								<div class="form-group">
 									<label for="streetaddress">Street Address</label>
-									<input type="text" class="form-control" placeholder="House number and street name">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)">
+									<input type="text" class="form-control" placeholder="House number and street name" id="inp-address">
 								</div>
 							</div>
 							<div class="w-100"></div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="towncity">Town / City</label>
-									<input type="text" class="form-control" placeholder="">
+									<input type="text" class="form-control" placeholder="City.." id="inp-city">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="postcodezip">Postcode / ZIP *</label>
-									<input type="text" class="form-control" placeholder="">
+									<label for="postcodezip">Postcode / ZIP </label>
+									<input type="text" class="form-control" placeholder="Postcode.." id="inp-postcode">
 								</div>
 							</div>
 							<div class="w-100"></div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="phone">Phone *</label>
+									<input type="text" class="form-control" placeholder="Phonenumber.." id="inp-phone">
+								</div>
+							</div>
+							<!-- <div class="col-md-6">
+								<div class="form-group">
+									<label for="emailaddress">Email Address</label>
+									<input type="text" class="form-control" placeholder="">
+								</div>
+							</div> -->
+							<div class="w-100"></div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="phone">Phone</label>
-									<input type="text" class="form-control" placeholder="">
+									<label for="orderdate">Order Date *</label>
+									<input type="date" class="form-control" placeholder="Order date.." id="inp-order-date">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="emailaddress">Email Address</label>
-									<input type="text" class="form-control" placeholder="">
+									<label for="requireddate">Required Date *</label>
+									<input type="date" class="form-control" placeholder="Required date.." id="inp-required-date">
 								</div>
 							</div>
 							<div class="w-100"></div>
@@ -193,7 +191,7 @@
 								<h3 class="billing-heading mb-4">Cart Total</h3>
 								<p class="d-flex">
 									<span>Subtotal</span>
-									<span>$20.60</span>
+									<span id="cart-subtotal">$20.60</span>
 								</p>
 								<p class="d-flex">
 									<span>Delivery</span>
@@ -201,12 +199,12 @@
 								</p>
 								<p class="d-flex">
 									<span>Discount</span>
-									<span>$3.00</span>
+									<span>$0.00</span>
 								</p>
 								<hr>
 								<p class="d-flex total-price">
 									<span>Total</span>
-									<span>$17.60</span>
+									<span id="cart-total">$17.60</span>
 								</p>
 							</div>
 						</div>
@@ -242,7 +240,7 @@
 										</div>
 									</div>
 								</div>
-								<p><a href="#" class="btn btn-primary py-3 px-4">Place an order</a></p>
+								<p><a id="btn-place" href="#" class="btn btn-primary py-3 px-4">Place an order</a></p>
 							</div>
 						</div>
 					</div>
@@ -375,7 +373,7 @@
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="js/google-map.js"></script>
-	<script src="js/main.js"></script>
+	<script src="./js/pages/checkout.js"></script>
 
 	<script>
 		$(document).ready(function () {
