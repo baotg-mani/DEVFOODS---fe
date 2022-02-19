@@ -276,7 +276,7 @@
           <!-- BAR CHART -->
           <div class="card card-success">
             <div class="card-header">
-              <h3 class="card-title">Bar Chart</h3>
+              <h3 class="card-title">Daily Total Report</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -299,7 +299,7 @@
 
           <div class="card card-success">
             <div class="card-header">
-              <h3 class="card-title">Bar Chart</h3>
+              <h3 class="card-title">Weekly Total Report</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -359,6 +359,99 @@
   <!-- JS Order Bar chart  -->
 
   <script>
+    var vResponse = [];
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:8080/order-detail/day-of-week",
+      async: false,
+      success: function (response) {
+        vResponse = response;
+      }
+    });
+    // lọc ra mảng countries và mảng counts (số lượng customer tương ứng)
+    var days = []
+    var totals = []
+    var vMon = []
+    var vTue = []
+    var vWed = []
+    var vThu = []
+    var vFri = []
+    var vSat = []
+    var vSun = []
+
+    for (let i = 0; i < vResponse.length; i++) {
+      var x = vResponse[i]
+      if (x[0] == 1) {
+        vSun = x
+      }
+      if (x[0] == 2) {
+        vMon = x
+      }
+      if (x[0] == 3) {
+        vTue = x
+      }
+      if (x[0] == 4) {
+        vWed = x
+      }
+      if (x[0] == 5) {
+        vThu = x
+      }
+      if (x[0] == 6) {
+        vFri = x
+      }
+      if (x[0] == 7) {
+        vSat = x
+      }
+    }
+
+    var areaChartData1 = {
+      labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      datasets: [
+        {
+          label: 'Total value of orders ($)',
+          backgroundColor: 'rgba(60,141,188,0.9)',
+          borderColor: 'rgba(60,141,188,0.8)',
+          pointRadius: false,
+          pointColor: '#3b8bba',
+          pointStrokeColor: 'rgba(60,141,188,1)',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data: [vMon[3], vTue[3], vWed[3], vThu[3], vFri[3], vSat[3], vSun[3]]
+        }
+
+      ]
+    }
+
+    //-------------
+    //- BAR CHART -
+
+    var barChartCanvas1 = $('#barChart1').get(0).getContext('2d')
+    var barChartData = $.extend(true, {}, areaChartData1)
+    var temp0 = areaChartData1.datasets[0]
+    barChartData.datasets[0] = temp0
+
+    var barChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Thang doanh thu ($)'
+          }
+        }]
+      }
+    }
+
+    new Chart(barChartCanvas1, {
+      type: 'bar',
+      data: barChartData,
+      options: barChartOptions
+    })
+
+
+    // ---------------    
     var areaChartData = {
       labels: ['1st Week', '2nd Week', '3rd Week', '4th Week'],
       datasets: [
@@ -377,9 +470,6 @@
       ]
     }
 
-    //-------------
-    //- BAR CHART -
-    //-------------
     var barChartCanvas = $('#barChart2').get(0).getContext('2d')
     var barChartData = $.extend(true, {}, areaChartData)
     var temp0 = areaChartData.datasets[0]
