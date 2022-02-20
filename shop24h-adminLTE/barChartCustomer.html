@@ -359,10 +359,12 @@
   <!-- JS Order Bar chart  -->
 
   <script>
+    // --------------- 
+    // Call API xủ lý Bar Chart Customer theo Order
     var vResponse = [];
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/order-detail/day-of-week",
+      url: "http://localhost:8080/order-detail/days",
       async: false,
       success: function (response) {
         vResponse = response;
@@ -422,9 +424,7 @@
       ]
     }
 
-    //-------------
-    //- BAR CHART -
-
+    //- BAR CHART Customer theo Order -
     var barChartCanvas1 = $('#barChart1').get(0).getContext('2d')
     var barChartData = $.extend(true, {}, areaChartData1)
     var temp0 = areaChartData1.datasets[0]
@@ -451,12 +451,29 @@
     })
 
 
-    // ---------------    
+
+
+    // --------------- 
+    // Call API xử lý Bar Chart Customer theo Payment
+    var vResWeek = []
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:8080/order-detail/weeks",
+      async: false,
+      success: function (response) {
+        vResWeek = response
+      }
+    });
+    var v4thWeek = vResWeek[0]
+    var v3rdWeek = vResWeek[1]
+    var v2ndWeek = vResWeek[2]
+    var v1stWeek = vResWeek[3]
+
     var areaChartData = {
-      labels: ['1st Week', '2nd Week', '3rd Week', '4th Week'],
+      labels: [`Week ${v1stWeek[0]}`, `Week ${v2ndWeek[0]}`, `Week ${v3rdWeek[0]}`, `Week ${v4thWeek[0]}`],
       datasets: [
         {
-          label: 'Order',
+          label: 'Total value of orders ($)',
           backgroundColor: 'rgba(60,141,188,0.9)',
           borderColor: 'rgba(60,141,188,0.8)',
           pointRadius: false,
@@ -464,12 +481,13 @@
           pointStrokeColor: 'rgba(60,141,188,1)',
           pointHighlightFill: '#fff',
           pointHighlightStroke: 'rgba(60,141,188,1)',
-          data: [28, 48, 40, 19]
+          data: [v1stWeek[2], v2ndWeek[2], v3rdWeek[2], v4thWeek[2]]
         }
 
       ]
     }
 
+    //- BAR CHART Customer theo Order -
     var barChartCanvas = $('#barChart2').get(0).getContext('2d')
     var barChartData = $.extend(true, {}, areaChartData)
     var temp0 = areaChartData.datasets[0]
@@ -483,7 +501,7 @@
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'amount of order'
+            labelString: 'Thang doanh thu ($)'
           }
         }]
       }
