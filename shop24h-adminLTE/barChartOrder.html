@@ -31,7 +31,7 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">ProductLine list</a>
+          <a href="#" class="nav-link">Charts</a>
         </li>
       </ul>
 
@@ -152,8 +152,8 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
-              <a href="#" class="nav-link active">
+            <li class="nav-item menu-close">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Dashboard
@@ -162,7 +162,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="crudCustomer.html" class="nav-link ">
+                  <a href="crudCustomer.html" class="nav-link">
                     <i class="fas fa-users nav-icon"></i>
                     <p>CRUD Customer</p>
                   </a>
@@ -180,7 +180,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="crudOrder.html" class="nav-link ">
+                  <a href="crudOrder.html" class="nav-link">
                     <i class="fas fa-dolly nav-icon"></i>
                     <p>CRUD Order</p>
                   </a>
@@ -198,13 +198,13 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="crudProduct.html" class="nav-link ">
+                  <a href="crudProduct.html" class="nav-link">
                     <i class="fas fa-cubes nav-icon"></i>
                     <p>CRUD Product</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="crudProductLine.html" class="nav-link active">
+                  <a href="crudProductLine.html" class="nav-link">
                     <i class="fas fa-cube nav-icon"></i>
                     <p>CRUD ProductLine</p>
                   </a>
@@ -213,8 +213,8 @@
             </li>
 
             <!-- Charts -->
-            <li class="nav-item menu-close">
-              <a href="#" class="nav-link ">
+            <li class="nav-item menu-open">
+              <a href="#" class="nav-link active">
                 <i class="nav-icon fas fa-chart-pie"></i>
                 <p>
                   Charts
@@ -223,7 +223,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="barChartOrder.html" class="nav-link ">
+                  <a href="barChartOrder.html" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Order Bar Chart</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="barChartCustomer.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Customer Bar Chart</p>
                   </a>
@@ -231,19 +237,13 @@
                 <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Chart</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Chart</p>
+                    <p>Customer Type Bar Chart</p>
                   </a>
                 </li>
               </ul>
             </li>
-
           </ul>
+
         </nav>
         <!-- /.sidebar-menu -->
       </div>
@@ -257,12 +257,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">ProductLine List</h1>
+              <h1 class="m-0">Order Bar Chart</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">ProductLine list</li>
+                <li class="breadcrumb-item active">Customer Bar Chart</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -270,77 +270,59 @@
       </div>
 
       <!-- Main content -->
-      <div class="container">
-        <h2 style="text-align: center; font-weight: bold;">ProductLine Management</h2>
-        <button class="btn btn-primary mb-2" id="add-new">Add new</button>
-        <table class="table table-bordered table-striped table-hover text-center" id="product-line-table">
-          <thead>
-            <tr>
-              <th>STT</th>
-              <th>productLine</th>
-              <th>description</th>
-              <th>Actions</th>
-            </tr>
-        </table>
+      <section class="content">
+        <div class="container-fluid">
 
-        <!-- Modal add & edit ProductLine -->
-        <div id="modal-add-edit-product-line" class="modal" tabindex="-1" role="dialog" style="display: none;">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content bg-primary">
-              <div class="modal-header">
-                <h5 id="add-edit-h5" class="modal-title">Add ProductLine</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+          <!-- BAR CHART -->
+          <div class="card card-success">
+            <div class="card-header">
+              <h3 class="card-title">Daily Total Report</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
                 </button>
               </div>
-              <div class="modal-body">
-                <div class="row form-group">
-                  <div class="col-sm-4">
-                    <label>productLine</label>
-                  </div>
-                  <div class="col-sm-8">
-                    <input id="input-productLine" type="text" class="form-control" placeholder="productLine ...">
-                  </div>
-                </div>
-                <div class="row form-group">
-                  <div class="col-sm-4">
-                    <label>description</label>
-                  </div>
-                  <div class="col-sm-8">
-                    <textarea id="input-description" type="text" class="form-control" placeholder="description ...">
-                    </textarea>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-outline-light" id="save-data">Save data</button>
-                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+            </div>
+            <div class="card-body">
+              <div class="chart">
+                <canvas id="barChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;">
+                </canvas>
               </div>
             </div>
+            <!-- /.card-body -->
           </div>
-        </div>
+          <!-- /.card -->
 
-        <!-- Modal delete -->
-        <div id="modal-delete" class="modal" tabindex="-1" role="dialog" style="display: none;">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content bg-danger">
-              <div class="modal-header">
-                <h5 class="modal-title">Delete Row</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+          <div class="card card-success">
+            <div class="card-header">
+              <h3 class="card-title">Weekly Total Report</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
                 </button>
               </div>
-              <div class="modal-body">
-                <p>Are you sure you want to delete this product line?</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline-light" id="confirm-delete">Delete</button>
-                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+            </div>
+            <div class="card-body">
+              <div class="chart">
+                <canvas id="barChart2"
+                  style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
               </div>
             </div>
+            <!-- /.card-body -->
           </div>
+          <!-- /.card -->
+
         </div>
-      </div>
+      </section>
+
 
     </div>
 
@@ -364,6 +346,9 @@
   <!-- AdminLTE App -->
   <script src="dist/js/adminlte.js"></script>
 
+  <!-- ChartJS -->
+  <script src="plugins/chart.js/Chart.min.js"></script>
+
   <!-- Toastr -->
   <script src="plugins/toastr/toastr.min.js"></script>
 
@@ -371,6 +356,274 @@
   <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 
-  <!-- JS ProductLine CRUD -->
-  <script src="dist/js/pages/productLine.js"></script>
+  <!-- JS Order Bar chart  -->
+
+  <script>
+    // --------------- 
+    // Call API xủ lý Bar Chart Ngày
+    var vResponse = [];
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:8080/order-detail/days",
+      async: false,
+      success: function (response) {
+        vResponse = response;
+      }
+    });
+    // lọc ra mảng countries và mảng counts (số lượng customer tương ứng)
+    var days = []
+    var totals = []
+    var vMon = []
+    var vTue = []
+    var vWed = []
+    var vThu = []
+    var vFri = []
+    var vSat = []
+    var vSun = []
+
+    for (let i = 0; i < vResponse.length; i++) {
+      var x = vResponse[i]
+      if (x[0] == 1) {
+        vSun = x
+      }
+      if (x[0] == 2) {
+        vMon = x
+      }
+      if (x[0] == 3) {
+        vTue = x
+      }
+      if (x[0] == 4) {
+        vWed = x
+      }
+      if (x[0] == 5) {
+        vThu = x
+      }
+      if (x[0] == 6) {
+        vFri = x
+      }
+      if (x[0] == 7) {
+        vSat = x
+      }
+    }
+
+    var areaChartData1 = {
+      labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      datasets: [
+        {
+          label: 'Total value of orders ($)',
+          backgroundColor: 'rgba(60,141,188,0.9)',
+          borderColor: 'rgba(60,141,188,0.8)',
+          pointRadius: false,
+          pointColor: '#3b8bba',
+          pointStrokeColor: 'rgba(60,141,188,1)',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data: [vMon[3], vTue[3], vWed[3], vThu[3], vFri[3], vSat[3], vSun[3]]
+        }
+
+      ]
+    }
+
+    //- BAR CHART theo báo cáo ngày -
+
+    var barChartCanvas1 = $('#barChart1').get(0).getContext('2d')
+    var barChartData = $.extend(true, {}, areaChartData1)
+    var temp0 = areaChartData1.datasets[0]
+    barChartData.datasets[0] = temp0
+
+    var barChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Thang doanh thu ($)'
+          }
+        }]
+      }
+    }
+
+    new Chart(barChartCanvas1, {
+      type: 'bar',
+      data: barChartData,
+      options: barChartOptions
+    })
+
+
+    // --------------- 
+    // Call API xủ lý Bar Chart Tuần
+    var vResWeek = []
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:8080/order-detail/weeks",
+      async: false,
+      success: function (response) {
+        vResWeek = response
+      }
+    });
+    var v4thWeek = vResWeek[0]
+    var v3rdWeek = vResWeek[1]
+    var v2ndWeek = vResWeek[2]
+    var v1stWeek = vResWeek[3]
+
+    var areaChartData = {
+      labels: [`Week ${v1stWeek[0]}`, `Week ${v2ndWeek[0]}`, `Week ${v3rdWeek[0]}`, `Week ${v4thWeek[0]}`],
+      datasets: [
+        {
+          label: 'Total value of orders ($)',
+          backgroundColor: 'rgba(60,141,188,0.9)',
+          borderColor: 'rgba(60,141,188,0.8)',
+          pointRadius: false,
+          pointColor: '#3b8bba',
+          pointStrokeColor: 'rgba(60,141,188,1)',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data: [v1stWeek[2], v2ndWeek[2], v3rdWeek[2], v4thWeek[2]]
+        }
+
+      ]
+    }
+
+    var barChartCanvas = $('#barChart2').get(0).getContext('2d')
+    var barChartData = $.extend(true, {}, areaChartData)
+    var temp0 = areaChartData.datasets[0]
+    barChartData.datasets[0] = temp0
+
+    var barChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Thang doanh thu ($)'
+          }
+        }]
+      }
+    }
+
+    new Chart(barChartCanvas, {
+      type: 'bar',
+      data: barChartData,
+      options: barChartOptions
+    })
+
+  </script>
+
+  <script>
+    // var resArr = [];
+    //call restAPI để nhận data dữ liệu lượng customer theo 4 nước USA, singapore, france, spain
+    // $.ajax({
+    //   type: "GET",
+    //   data: "",
+    //   dataType: "json",
+    //   url: "http://localhost:8080/number-countries",
+    //   success: function (response) {
+    //     console.log(response);
+    //     // lọc ra mảng countries và mảng counts (số lượng customer tương ứng)
+    //     var countries = []
+    //     var counts = []
+    //     for (let i = 0; i < response.length; i++) {
+    //       var x = response[i]
+    //       var country = x[0]
+    //       countries.push(country)
+    //       var count = x[1]
+    //       counts.push(count)
+    //     }
+
+    //     var areaChartData = {
+    //       labels: [''],
+    //       datasets: [
+    //         {
+    //           label: countries[0],
+    //           backgroundColor: 'rgba(60,141,188,0.9)',
+    //           borderColor: 'rgba(60,141,188,0.8)',
+    //           pointRadius: false,
+    //           pointColor: '#3b8bba',
+    //           pointStrokeColor: 'rgba(60,141,188,1)',
+    //           pointHighlightFill: '#fff',
+    //           pointHighlightStroke: 'rgba(60,141,188,1)',
+    //           data: [counts[0]]
+    //         },
+    //         {
+    //           label: countries[1],
+    //           backgroundColor: 'rgba(210, 214, 100, 1)',
+    //           borderColor: 'rgba(210, 214, 100, 1)',
+    //           pointRadius: false,
+    //           pointColor: 'rgba(210, 214, 100, 1)',
+    //           pointStrokeColor: '#c1c7d1',
+    //           pointHighlightFill: '#fff',
+    //           pointHighlightStroke: 'rgba(220,220,100,1)',
+    //           data: [counts[1]]
+    //         },
+    //         {
+    //           label: countries[2],
+    //           backgroundColor: 'rgba(60,141,111,0.9)',
+    //           borderColor: 'rgba(60,141,111,0.8)',
+    //           pointRadius: false,
+    //           pointColor: '#3b8bba',
+    //           pointStrokeColor: 'rgba(60,141,111,1)',
+    //           pointHighlightFill: '#fff',
+    //           pointHighlightStroke: 'rgba(60,141,111,1)',
+    //           data: [counts[2]]
+    //         },
+    //         {
+    //           label: countries[3],
+    //           backgroundColor: 'rgba(210, 214, 222, 1)',
+    //           borderColor: 'rgba(210, 214, 222, 1)',
+    //           pointRadius: false,
+    //           pointColor: 'rgba(210, 214, 222, 1)',
+    //           pointStrokeColor: '#c1c7d1',
+    //           pointHighlightFill: '#fff',
+    //           pointHighlightStroke: 'rgba(220,220,220,1)',
+    //           data: [counts[3]]
+    //         }
+    //       ]
+    //     }
+
+    //     //- BAR CHART -
+    //     //-------------
+    //     var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    //     var barChartData = $.extend(true, {}, areaChartData)
+    //     var temp0 = areaChartData.datasets[0]
+    //     var temp1 = areaChartData.datasets[1]
+    //     var temp2 = areaChartData.datasets[2]
+    //     var temp3 = areaChartData.datasets[3]
+    //     barChartData.datasets[0] = temp0
+    //     barChartData.datasets[1] = temp1
+    //     barChartData.datasets[2] = temp2
+    //     barChartData.datasets[3] = temp3
+
+    //     var barChartOptions = {
+    //       responsive: true,
+    //       maintainAspectRatio: false,
+    //       datasetFill: false,
+    //       scales: {
+    //         yAxes: [{
+    //           scaleLabel: {
+    //             display: true,
+    //             labelString: 'amount of customer (unit: person)'
+    //           }
+    //         }]
+    //       }
+
+    //     }
+
+    //     new Chart(barChartCanvas, {
+    //       type: 'bar',
+    //       data: barChartData,
+    //       options: barChartOptions
+    //     })
+
+    //   },
+    //   error: function (ajaxContext) {
+    //     alert(ajaxContext.responseText);
+    //   }
+    // });
+
+  </script>
+
 </body>
