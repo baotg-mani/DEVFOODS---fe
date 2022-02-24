@@ -134,6 +134,10 @@ AOS.init({
     console.log('show');
   });
 
+  $('#dropdown05').on('show.bs.dropdown', function () {
+    console.log('show');
+  });
+
   // scroll
   var scrollWindow = function () {
     $(window).scroll(function () {

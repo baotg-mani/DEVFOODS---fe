@@ -3,6 +3,10 @@
 var gSTT = 1;
 var gTable = $("#orderDetail-table").DataTable({
   "ordering": false,
+  "bLengthChange": false,
+  "searching": false,
+  "autoWidth": false,
+  "responsive": true,
   "columns": [
     { "data": "id" },
     { "data": "quantityOrder" },

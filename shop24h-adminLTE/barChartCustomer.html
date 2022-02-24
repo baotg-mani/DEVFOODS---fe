@@ -223,21 +223,21 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="barChartCustomer.html" class="nav-link active">
+                  <a href="barChartOrder.html" class="nav-link ">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Order Bar Chart</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="barChartCustomer.html" class="nav-link active">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Chart</p>
+                    <p>Customer Bar Chart</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="barChartCustomerType.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Chart</p>
+                    <p>Customer Type Bar Chart</p>
                   </a>
                 </li>
               </ul>
@@ -257,7 +257,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Order Bar Chart</h1>
+              <h1 class="m-0">Customer Bar Chart</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -274,9 +274,24 @@
         <div class="container-fluid">
 
           <!-- BAR CHART -->
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="dt-buttons btn-group flex-wrap"> <button class="btn btn-secondary buttons-copy buttons-html5"
+                  tabindex="0" aria-controls="example1" type="button"><span>Copy</span></button> <button
+                  class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1"
+                  type="button"><span>Excel</span></button> <button class="btn btn-secondary buttons-pdf buttons-html5"
+                  tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button> <button
+                  class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1"
+                  type="button"><span>Print</span></button>
+                <div class="btn-group"><button
+                    class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0"
+                    aria-controls="example1" type="button" aria-haspopup="true" aria-expanded="false"></button></div>
+              </div>
+            </div>
+          </div>
           <div class="card card-success">
             <div class="card-header">
-              <h3 class="card-title">Daily Total Report</h3>
+              <h3 class="card-title">Customer By Order Report</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -297,9 +312,24 @@
           </div>
           <!-- /.card -->
 
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="dt-buttons btn-group flex-wrap"> <button class="btn btn-secondary buttons-copy buttons-html5"
+                  tabindex="0" aria-controls="example1" type="button"><span>Copy</span></button> <button
+                  class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1"
+                  type="button"><span>Excel</span></button> <button class="btn btn-secondary buttons-pdf buttons-html5"
+                  tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button> <button
+                  class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1"
+                  type="button"><span>Print</span></button>
+                <div class="btn-group"><button
+                    class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0"
+                    aria-controls="example1" type="button" aria-haspopup="true" aria-expanded="false"></button></div>
+              </div>
+            </div>
+          </div>
           <div class="card card-success">
             <div class="card-header">
-              <h3 class="card-title">Weekly Total Report</h3>
+              <h3 class="card-title">Customer By Payment Report</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -360,57 +390,33 @@
 
   <script>
     // --------------- 
-    // Call API xủ lý Bar Chart Customer theo Order
+    // Call API xủ lý Bar Chart Customer theo Order và Payment
     var vResponse = [];
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/order-detail/days",
+      url: "http://localhost:8080/order/customer",
       async: false,
       success: function (response) {
         vResponse = response;
       }
     });
-    // lọc ra mảng countries và mảng counts (số lượng customer tương ứng)
-    var days = []
-    var totals = []
-    var vMon = []
-    var vTue = []
-    var vWed = []
-    var vThu = []
-    var vFri = []
-    var vSat = []
-    var vSun = []
+    // lọc ra mảng fullname of Customer và mảng số order, mảng số tiền mua của customer
+    var vOrdersArr = []
+    var vPaymentsAr = []
+    var vCustomerArr = []
 
     for (let i = 0; i < vResponse.length; i++) {
       var x = vResponse[i]
-      if (x[0] == 1) {
-        vSun = x
-      }
-      if (x[0] == 2) {
-        vMon = x
-      }
-      if (x[0] == 3) {
-        vTue = x
-      }
-      if (x[0] == 4) {
-        vWed = x
-      }
-      if (x[0] == 5) {
-        vThu = x
-      }
-      if (x[0] == 6) {
-        vFri = x
-      }
-      if (x[0] == 7) {
-        vSat = x
-      }
+      vCustomerArr.push(x[2])
+      vOrdersArr.push(x[3])
+      vPaymentsAr.push(x[4])
     }
 
     var areaChartData1 = {
-      labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      labels: vCustomerArr,
       datasets: [
         {
-          label: 'Total value of orders ($)',
+          label: 'Number of orders (đơn)',
           backgroundColor: 'rgba(60,141,188,0.9)',
           borderColor: 'rgba(60,141,188,0.8)',
           pointRadius: false,
@@ -418,7 +424,7 @@
           pointStrokeColor: 'rgba(60,141,188,1)',
           pointHighlightFill: '#fff',
           pointHighlightStroke: 'rgba(60,141,188,1)',
-          data: [vMon[3], vTue[3], vWed[3], vThu[3], vFri[3], vSat[3], vSun[3]]
+          data: vOrdersArr
         }
 
       ]
@@ -438,7 +444,7 @@
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'Thang doanh thu ($)'
+            labelString: 'Thang số lượng order (đơn)'
           }
         }]
       }
@@ -451,26 +457,10 @@
     })
 
 
-
-
     // --------------- 
-    // Call API xử lý Bar Chart Customer theo Payment
-    var vResWeek = []
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:8080/order-detail/weeks",
-      async: false,
-      success: function (response) {
-        vResWeek = response
-      }
-    });
-    var v4thWeek = vResWeek[0]
-    var v3rdWeek = vResWeek[1]
-    var v2ndWeek = vResWeek[2]
-    var v1stWeek = vResWeek[3]
 
     var areaChartData = {
-      labels: [`Week ${v1stWeek[0]}`, `Week ${v2ndWeek[0]}`, `Week ${v3rdWeek[0]}`, `Week ${v4thWeek[0]}`],
+      labels: vCustomerArr,
       datasets: [
         {
           label: 'Total value of orders ($)',
@@ -481,7 +471,7 @@
           pointStrokeColor: 'rgba(60,141,188,1)',
           pointHighlightFill: '#fff',
           pointHighlightStroke: 'rgba(60,141,188,1)',
-          data: [v1stWeek[2], v2ndWeek[2], v3rdWeek[2], v4thWeek[2]]
+          data: vPaymentsAr
         }
 
       ]
@@ -512,119 +502,6 @@
       data: barChartData,
       options: barChartOptions
     })
-
-  </script>
-
-  <script>
-    // var resArr = [];
-    //call restAPI để nhận data dữ liệu lượng customer theo 4 nước USA, singapore, france, spain
-    // $.ajax({
-    //   type: "GET",
-    //   data: "",
-    //   dataType: "json",
-    //   url: "http://localhost:8080/number-countries",
-    //   success: function (response) {
-    //     console.log(response);
-    //     // lọc ra mảng countries và mảng counts (số lượng customer tương ứng)
-    //     var countries = []
-    //     var counts = []
-    //     for (let i = 0; i < response.length; i++) {
-    //       var x = response[i]
-    //       var country = x[0]
-    //       countries.push(country)
-    //       var count = x[1]
-    //       counts.push(count)
-    //     }
-
-    //     var areaChartData = {
-    //       labels: [''],
-    //       datasets: [
-    //         {
-    //           label: countries[0],
-    //           backgroundColor: 'rgba(60,141,188,0.9)',
-    //           borderColor: 'rgba(60,141,188,0.8)',
-    //           pointRadius: false,
-    //           pointColor: '#3b8bba',
-    //           pointStrokeColor: 'rgba(60,141,188,1)',
-    //           pointHighlightFill: '#fff',
-    //           pointHighlightStroke: 'rgba(60,141,188,1)',
-    //           data: [counts[0]]
-    //         },
-    //         {
-    //           label: countries[1],
-    //           backgroundColor: 'rgba(210, 214, 100, 1)',
-    //           borderColor: 'rgba(210, 214, 100, 1)',
-    //           pointRadius: false,
-    //           pointColor: 'rgba(210, 214, 100, 1)',
-    //           pointStrokeColor: '#c1c7d1',
-    //           pointHighlightFill: '#fff',
-    //           pointHighlightStroke: 'rgba(220,220,100,1)',
-    //           data: [counts[1]]
-    //         },
-    //         {
-    //           label: countries[2],
-    //           backgroundColor: 'rgba(60,141,111,0.9)',
-    //           borderColor: 'rgba(60,141,111,0.8)',
-    //           pointRadius: false,
-    //           pointColor: '#3b8bba',
-    //           pointStrokeColor: 'rgba(60,141,111,1)',
-    //           pointHighlightFill: '#fff',
-    //           pointHighlightStroke: 'rgba(60,141,111,1)',
-    //           data: [counts[2]]
-    //         },
-    //         {
-    //           label: countries[3],
-    //           backgroundColor: 'rgba(210, 214, 222, 1)',
-    //           borderColor: 'rgba(210, 214, 222, 1)',
-    //           pointRadius: false,
-    //           pointColor: 'rgba(210, 214, 222, 1)',
-    //           pointStrokeColor: '#c1c7d1',
-    //           pointHighlightFill: '#fff',
-    //           pointHighlightStroke: 'rgba(220,220,220,1)',
-    //           data: [counts[3]]
-    //         }
-    //       ]
-    //     }
-
-    //     //- BAR CHART -
-    //     //-------------
-    //     var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    //     var barChartData = $.extend(true, {}, areaChartData)
-    //     var temp0 = areaChartData.datasets[0]
-    //     var temp1 = areaChartData.datasets[1]
-    //     var temp2 = areaChartData.datasets[2]
-    //     var temp3 = areaChartData.datasets[3]
-    //     barChartData.datasets[0] = temp0
-    //     barChartData.datasets[1] = temp1
-    //     barChartData.datasets[2] = temp2
-    //     barChartData.datasets[3] = temp3
-
-    //     var barChartOptions = {
-    //       responsive: true,
-    //       maintainAspectRatio: false,
-    //       datasetFill: false,
-    //       scales: {
-    //         yAxes: [{
-    //           scaleLabel: {
-    //             display: true,
-    //             labelString: 'amount of customer (unit: person)'
-    //           }
-    //         }]
-    //       }
-
-    //     }
-
-    //     new Chart(barChartCanvas, {
-    //       type: 'bar',
-    //       data: barChartData,
-    //       options: barChartOptions
-    //     })
-
-    //   },
-    //   error: function (ajaxContext) {
-    //     alert(ajaxContext.responseText);
-    //   }
-    // });
 
   </script>
 
