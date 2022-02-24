@@ -274,6 +274,21 @@
         <div class="container-fluid">
 
           <!-- BAR CHART -->
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="dt-buttons btn-group flex-wrap"> <button class="btn btn-secondary buttons-copy buttons-html5"
+                  tabindex="0" aria-controls="example1" type="button"><span>Copy</span></button> <button
+                  class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1"
+                  type="button"><span>Excel</span></button> <button class="btn btn-secondary buttons-pdf buttons-html5"
+                  tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button> <button
+                  class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1"
+                  type="button"><span>Print</span></button>
+                <div class="btn-group"><button
+                    class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0"
+                    aria-controls="example1" type="button" aria-haspopup="true" aria-expanded="false"></button></div>
+              </div>
+            </div>
+          </div>
           <div class="card card-success">
             <div class="card-header">
               <h3 class="card-title">Daily Total Report</h3>
@@ -297,6 +312,21 @@
           </div>
           <!-- /.card -->
 
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="dt-buttons btn-group flex-wrap"> <button class="btn btn-secondary buttons-copy buttons-html5"
+                  tabindex="0" aria-controls="example1" type="button"><span>Copy</span></button> <button
+                  class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1"
+                  type="button"><span>Excel</span></button> <button class="btn btn-secondary buttons-pdf buttons-html5"
+                  tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button> <button
+                  class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1"
+                  type="button"><span>Print</span></button>
+                <div class="btn-group"><button
+                    class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0"
+                    aria-controls="example1" type="button" aria-haspopup="true" aria-expanded="false"></button></div>
+              </div>
+            </div>
+          </div>
           <div class="card card-success">
             <div class="card-header">
               <h3 class="card-title">Weekly Total Report</h3>
@@ -510,119 +540,6 @@
       data: barChartData,
       options: barChartOptions
     })
-
-  </script>
-
-  <script>
-    // var resArr = [];
-    //call restAPI để nhận data dữ liệu lượng customer theo 4 nước USA, singapore, france, spain
-    // $.ajax({
-    //   type: "GET",
-    //   data: "",
-    //   dataType: "json",
-    //   url: "http://localhost:8080/number-countries",
-    //   success: function (response) {
-    //     console.log(response);
-    //     // lọc ra mảng countries và mảng counts (số lượng customer tương ứng)
-    //     var countries = []
-    //     var counts = []
-    //     for (let i = 0; i < response.length; i++) {
-    //       var x = response[i]
-    //       var country = x[0]
-    //       countries.push(country)
-    //       var count = x[1]
-    //       counts.push(count)
-    //     }
-
-    //     var areaChartData = {
-    //       labels: [''],
-    //       datasets: [
-    //         {
-    //           label: countries[0],
-    //           backgroundColor: 'rgba(60,141,188,0.9)',
-    //           borderColor: 'rgba(60,141,188,0.8)',
-    //           pointRadius: false,
-    //           pointColor: '#3b8bba',
-    //           pointStrokeColor: 'rgba(60,141,188,1)',
-    //           pointHighlightFill: '#fff',
-    //           pointHighlightStroke: 'rgba(60,141,188,1)',
-    //           data: [counts[0]]
-    //         },
-    //         {
-    //           label: countries[1],
-    //           backgroundColor: 'rgba(210, 214, 100, 1)',
-    //           borderColor: 'rgba(210, 214, 100, 1)',
-    //           pointRadius: false,
-    //           pointColor: 'rgba(210, 214, 100, 1)',
-    //           pointStrokeColor: '#c1c7d1',
-    //           pointHighlightFill: '#fff',
-    //           pointHighlightStroke: 'rgba(220,220,100,1)',
-    //           data: [counts[1]]
-    //         },
-    //         {
-    //           label: countries[2],
-    //           backgroundColor: 'rgba(60,141,111,0.9)',
-    //           borderColor: 'rgba(60,141,111,0.8)',
-    //           pointRadius: false,
-    //           pointColor: '#3b8bba',
-    //           pointStrokeColor: 'rgba(60,141,111,1)',
-    //           pointHighlightFill: '#fff',
-    //           pointHighlightStroke: 'rgba(60,141,111,1)',
-    //           data: [counts[2]]
-    //         },
-    //         {
-    //           label: countries[3],
-    //           backgroundColor: 'rgba(210, 214, 222, 1)',
-    //           borderColor: 'rgba(210, 214, 222, 1)',
-    //           pointRadius: false,
-    //           pointColor: 'rgba(210, 214, 222, 1)',
-    //           pointStrokeColor: '#c1c7d1',
-    //           pointHighlightFill: '#fff',
-    //           pointHighlightStroke: 'rgba(220,220,220,1)',
-    //           data: [counts[3]]
-    //         }
-    //       ]
-    //     }
-
-    //     //- BAR CHART -
-    //     //-------------
-    //     var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    //     var barChartData = $.extend(true, {}, areaChartData)
-    //     var temp0 = areaChartData.datasets[0]
-    //     var temp1 = areaChartData.datasets[1]
-    //     var temp2 = areaChartData.datasets[2]
-    //     var temp3 = areaChartData.datasets[3]
-    //     barChartData.datasets[0] = temp0
-    //     barChartData.datasets[1] = temp1
-    //     barChartData.datasets[2] = temp2
-    //     barChartData.datasets[3] = temp3
-
-    //     var barChartOptions = {
-    //       responsive: true,
-    //       maintainAspectRatio: false,
-    //       datasetFill: false,
-    //       scales: {
-    //         yAxes: [{
-    //           scaleLabel: {
-    //             display: true,
-    //             labelString: 'amount of customer (unit: person)'
-    //           }
-    //         }]
-    //       }
-
-    //     }
-
-    //     new Chart(barChartCanvas, {
-    //       type: 'bar',
-    //       data: barChartData,
-    //       options: barChartOptions
-    //     })
-
-    //   },
-    //   error: function (ajaxContext) {
-    //     alert(ajaxContext.responseText);
-    //   }
-    // });
 
   </script>
 

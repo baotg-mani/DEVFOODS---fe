@@ -225,19 +225,19 @@
                 <li class="nav-item">
                   <a href="barChartOrder.html" class="nav-link ">
                     <i class="far fa-circle nav-icon"></i>
+                    <p>Order Bar Chart</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
                     <p>Customer Bar Chart</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Chart</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Chart</p>
+                    <p>Customer Type Bar Chart</p>
                   </a>
                 </li>
               </ul>
@@ -273,6 +273,22 @@
       <div class="container-fluid">
         <h2 style="text-align: center; font-weight: bold;">Order Management</h2>
         <button class="btn btn-primary mb-2" id="add-new">Add new</button>
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <div class="dt-buttons btn-group flex-wrap"> <button class="btn btn-secondary buttons-copy buttons-html5"
+                tabindex="0" aria-controls="example1" type="button"><span>Copy</span></button> <button
+                class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="example1"
+                type="button"><span>CSV</span></button> <button class="btn btn-secondary buttons-excel buttons-html5"
+                tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button> <button
+                class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1"
+                type="button"><span>PDF</span></button> <button class="btn btn-secondary buttons-print" tabindex="0"
+                aria-controls="example1" type="button"><span>Print</span></button>
+              <div class="btn-group"><button class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis"
+                  tabindex="0" aria-controls="example1" type="button" aria-haspopup="true"
+                  aria-expanded="false"><span>Column visibility</span></button></div>
+            </div>
+          </div>
+        </div>
         <table class="table table-bordered table-striped table-hover text-center" id="order-table">
           <thead>
             <tr>
