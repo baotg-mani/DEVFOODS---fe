@@ -41,7 +41,7 @@ function onPageLoading() {
 function redirectToLogin() {
   // Trước khi logout cần xóa token đã lưu trong cookie
   setCookie("token", "", 1);
-  window.location.href = "../login/login.html";
+  window.location.href = "/shop24h-frontend/vegefoods-master/login.html";
 }
 
 //Hiển thị thông tin người dùng
