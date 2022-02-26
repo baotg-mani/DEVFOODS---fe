@@ -357,22 +357,29 @@ const gURL_LOGIN = "http://localhost:8080/login";
 
 /*** REGION 2 - Vùng gán / thực thi sự kiện cho các elements */
 $(document).ready(function () {
-  //Kiểm tra token nếu có token tức người dùng đã đăng nhập thì chuyển sang page info
-  if (gTOKEN) {
-    // window.location.href = "/shop24h-frontend/vegefoods-master/userInfo.html";
-  }
+  // Gọi sự kiện load trang
+  onPageLoading();
 
-  //--- gán sự kiện khi submit form login (form code bên html dùng thẻ <form> nên phải dùng code này)
+  // Gán sự kiện khi submit form login (form code bên html dùng thẻ <form> nên phải dùng code này)
   $("#form-submit").on("submit", function (e) {
     e.preventDefault();
     onBtnLoginClick();
   });
 
-  //--- Sử dụng cách gán sự kiện này khi khối form code trong html dùng thẻ <div>
+  // Sử dụng cách gán sự kiện này khi khối form code trong html dùng thẻ <div>
   // $("#btn-login").on("click", onBtnLoginClick);
 });
 
 /*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
+// Hàm xử lý sự kiện load trang
+function onPageLoading() {
+  // thu thập sp trong cart ở localStorage
+  gCartArr = JSON.parse(localStorage.cart);
+  console.log(gCartArr);
+  // hiển thị lên icon cart thông báo
+  $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
+}
+
 // hàm xử lý sự kiện login
 function onBtnLoginClick() {
   //B0: khai báo đối tượng chứa dữ liệu
@@ -425,16 +432,16 @@ function loginFunction(paramLoginObj) {
     dataType: "json",
     contentType: "application/json; charset=utf-8",
     success: function (pRes) {
-      console.log(pRes);
+      console.log(pRes.status);
       alert("Login successfully!");
-      gTOKEN = pRes.token;
+      gTOKEN = pRes;
       responseHandler(pRes);
       // chuyển snag trang User info
       window.location.href = "/shop24h-frontend/vegefoods-master/userInfo.html"
     },
     error: function (pAjaxContext) {
+      console.log(pAjaxContext.status);
       alert(pAjaxContext.responseText);
-      console.log(pAjaxContext.responseText);
       responseHandler(pAjaxContext.responseText);
     }
   });

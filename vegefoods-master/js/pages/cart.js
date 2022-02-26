@@ -385,7 +385,7 @@ $(document).ready(function () {
     $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
 
     // load các danh mục sp trong giỏ hàng ra danh sách
-    // lấy ra mảng các phần tử riêng biệt
+    // lấy ra mảng các phần tử riêng biệt (gDistinctArr)
     for (let i = 0; i < gCartArr.length; i++) {
       for (let j = 0; j <= i; j++) {
         if (j == i) {
@@ -398,7 +398,7 @@ $(document).ready(function () {
     }
     console.log(gDistinctArr);
 
-    // lặp đếm các phần tử cùng id và in ra danh sách các phần tử (sản phẩm) ra front-end
+    // lặp ĐẾM các phần tử cùng id và in ra danh sách các phần tử (sản phẩm) ra front-end
     for (let i = 0; i < gDistinctArr.length; i++) {
       var count = 0;
       for (let j = 0; j < gCartArr.length; j++) {
@@ -417,6 +417,10 @@ $(document).ready(function () {
           <td class="product-name">
             <h3>${gDistinctArr[i].productName}</h3>
             <p>Far far away, behind the word mountains, far from the countries</p>
+          </td>
+
+          <td class="price">
+            ${gDistinctArr[i].productSize}
           </td>
 
           <td class="price">${gDistinctArr[i].buyPrice}</td>

@@ -351,20 +351,34 @@ AOS.init({
 "use strict";
 /*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
 
+
 /*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */
 $(document).ready(function () {
-  // xử lý sự kiện khi Btn Sign up click
+  // Gọi sự kiện load trang
+  onPageLoading();
+
+  // Gán sự kiện click vào Btn Sign-Up
   $("#btn-sign-up").on("click", onBtnSignUpClick);
 });
 
+
 /*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
+// Hãm xử lý sự kiện load trang
+function onPageLoading() {
+  // thu thập sp trong cart ở localStorage
+  gCartArr = JSON.parse(localStorage.cart);
+  console.log(gCartArr);
+  // hiển thị lên icon cart thông báo
+  $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
+}
+
 // Hàm xử lý sự kiện click button Sign up
 function onBtnSignUpClick() {
   "use strict";
   // Khai báo đối tượng lưu dữ liệu
   var vSignUpData = {
-    firstname: "",
-    lastname: "",
+    // firstname: "",
+    // lastname: "",
     username: "",
     password: "",
   }
@@ -375,7 +389,7 @@ function onBtnSignUpClick() {
   if (vIsDataValid) {
     // B3: xử lý sự kiện front-end
     $.ajax({
-      url: "http://42.115.221.44:8080/devcamp-auth/users/signup",
+      url: "http://localhost:8080/register",
       type: 'POST',
       dataType: "json",
       contentType: "application/json; charset=utf-8",
@@ -392,12 +406,13 @@ function onBtnSignUpClick() {
   }
 }
 
+
 /*** REGION 4 - Common funtions - Vùng khai báo hàm dùng chung trong toàn bộ chương trình*/
 // Hàm get data trên form
 function getDataOnForm(paramSignUpObj) {
   "use strict";
-  paramSignUpObj.firstname = $("#input-firstname").val().trim();
-  paramSignUpObj.lastname = $("#input-lastname").val().trim();
+  // paramSignUpObj.firstname = $("#input-firstname").val().trim();
+  // paramSignUpObj.lastname = $("#input-lastname").val().trim();
   paramSignUpObj.username = $("#input-username").val().trim();
   paramSignUpObj.password = $("#input-password").val().trim();
 }
@@ -405,16 +420,16 @@ function getDataOnForm(paramSignUpObj) {
 // Hàm kiểm tra (validate) dữ liệu nhập vào
 function validateData(paramSignUpObj) {
   "use strict";
-  if (paramSignUpObj.firstname === "") {
-    alert("Invalid first name!");
-    console.log("Invalid first name!");
-    return false;
-  }
-  if (paramSignUpObj.lastname === "") {
-    alert("Invalid last name!");
-    console.log("Invalid last name!");
-    return false;
-  }
+  // if (paramSignUpObj.firstname === "") {
+  //   alert("Invalid first name!");
+  //   console.log("Invalid first name!");
+  //   return false;
+  // }
+  // if (paramSignUpObj.lastname === "") {
+  //   alert("Invalid last name!");
+  //   console.log("Invalid last name!");
+  //   return false;
+  // }
   if (paramSignUpObj.username === "") {
     alert("Invalid username");
     console.log("Invalid username");
