@@ -40,7 +40,7 @@
             <div class="col-md pr-4 d-flex topper align-items-center">
               <div class="icon mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span>
               </div>
-              <span class="text">+ 1235 2355 98</span>
+              <span class="text">+84 336699 146</span>
             </div>
             <div class="col-md pr-4 d-flex topper align-items-center">
               <div class="icon mr-2 d-flex justify-content-center align-items-center"><span
@@ -268,6 +268,14 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
+
+  <script>
+    // thu thập sp trong cart ở localStorage
+    gCartArr = JSON.parse(localStorage.cart);
+    console.log(gCartArr);
+    // hiển thị lên icon cart thông báo
+    $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
+  </script>
 
 </body>
 

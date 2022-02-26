@@ -487,6 +487,14 @@
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
 
+  <script>
+    // thu thập sp trong cart ở localStorage
+    gCartArr = JSON.parse(localStorage.cart);
+    console.log(gCartArr);
+    // hiển thị lên icon cart thông báo
+    $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
+  </script>
+
 </body>
 
 </html>

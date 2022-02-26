@@ -348,8 +348,12 @@ AOS.init({
 //---------------------------------------
 //---------------------------------------
 $(document).ready(function () {
+  "use strict";
   /*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
   var gId = null;
+  var gProductObj = null;
+  var gCartArr = [];
+  var gDistinctArr = [];
 
   /*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */
   onPageLoading();
@@ -357,19 +361,32 @@ $(document).ready(function () {
   // gán sự kiện onchange khi select size
   $("#select-size").on("change", onChangeSelectSize);
 
+  // gán sự kiện click vào btn Add to Cart
+  $("#btn_add").on("click", onBtnAddClick);
+
+
   /*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
   // Hàm xử lý sự kiện load trang
   function onPageLoading() {
+    "use strict";
+    // thu thập sp trong cart ở localStorage
+    if (localStorage.cart !== "") {
+      gCartArr = JSON.parse(localStorage.cart);
+      console.log(gCartArr);
+    }
+    // hiển thị lên icon cart thông báo
+    $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
+
     // thu thập id trên query string
     var vUrl = new URL(window.location.href);
     gId = vUrl.searchParams.get("id");
-
     // call API get data by id
     $.ajax({
       type: "GET",
       url: "http://localhost:8080/product" + "/" + gId,
       async: false,
       success: function (resProduct) {
+        gProductObj = resProduct;
         // load data of product into div
         var vDivProduct = $("#div-product");
         vDivProduct.html("");
@@ -433,7 +450,7 @@ $(document).ready(function () {
                 <p style="color: #000;">${resProduct.quantityInStock} kg available</p>
               </div>
             </div>
-            <p><a href="cart.html" class="btn btn-black py-3 px-5">Add to Cart</a></p>
+            <p><btn class="btn btn-black py-3 px-5" id="btn_add">Add to Cart</btn></p>
           </div>
         </div>
         `).appendTo(vDivProduct);
@@ -441,7 +458,9 @@ $(document).ready(function () {
     });
   }
 
+  // Hàm xử lý sự kiện khi thay đổi size sản phẩm
   function onChangeSelectSize() {
+    "use strict";
     var vSelectSize = $("#select-size").val();
     var vProductName = $("#product-name").html();
     console.log(vProductName)
@@ -452,11 +471,33 @@ $(document).ready(function () {
       url: `http://localhost:8080/product/${vProductName}/${vSelectSize}`,
       success: function (resProduct) {
         console.log(resProduct);
+        gProductObj = resProduct;
         // change product price follow size
         $("#product-price").html(`$${resProduct.buyPrice}.00`);
       }
     });
   }
+
+  // Hàm xử lý sự kiện khi click btn Add to Cart
+  function onBtnAddClick() {
+    "use strict";
+    // B1: thu thập dữ liệu
+    var vQuantity = parseInt($("#quantity").val());
+    // B2: validate 
+    if (vQuantity === 0) {
+      alert("Haven't selected any products yet");
+      return;
+    }
+    // B3: xử lý dự liệu
+    for (let i = 0; i < vQuantity; i++) {
+      gCartArr.push(gProductObj);
+    }
+    localStorage.cart = JSON.stringify(gCartArr);
+    // B4: xử lý hiển thị trên thanh thông báo
+    $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
+    window.location.href = "/shop24h-frontend/vegefoods-master/cart.html";
+  }
+
 
   /*** REGION 4 - Common funtions - Vùng khai báo hàm dùng chung trong toàn bộ chương trình*/
 
