@@ -353,7 +353,7 @@ $(document).ready(function () {
   var gId = null;
   var gProductObj = null;
   var gCartArr = [];
-  var gDistinctArr = [];
+
 
   /*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */
   onPageLoading();
@@ -369,13 +369,29 @@ $(document).ready(function () {
   // Hàm xử lý sự kiện load trang
   function onPageLoading() {
     "use strict";
-    // thu thập sp trong cart ở localStorage
-    if (localStorage.cart !== "") {
-      gCartArr = JSON.parse(localStorage.cart);
-      console.log(gCartArr);
+    // check nếu chưa có cart trong localSto thì khởi tạo
+    if (localStorage.cart == undefined) {
+      localStorage.cart = "";
     }
+
+    // thu thập sp trong cart ở localStorage
+    if (localStorage.cart != "") {
+      gCartArr = JSON.parse(localStorage.cart);
+    }
+    console.log(gCartArr);
+
     // hiển thị lên icon cart thông báo
     $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
+
+    // show username to navbar if exist username's value in localStorage
+    if (localStorage.username != "") {
+      $("#dropdown05").html(`<span class="icon-user"></span> ${localStorage.username}</a>`);
+    }
+
+    // show Logout function if exist username's value in localStorage
+    if (localStorage.username != "") {
+      $("#log_out").removeClass("d-none");
+    }
 
     // thu thập id trên query string
     var vUrl = new URL(window.location.href);

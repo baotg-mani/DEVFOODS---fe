@@ -415,6 +415,16 @@ $(document).ready(function () {
   /*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
   // Hàm xử lý sự kiện load trang
   function onPageLoading() {
+    // show username to navbar if exist username's value in localStorage
+    if (localStorage.username != "") {
+      $("#dropdown05").html(`<span class="icon-user"></span> ${localStorage.username}</a>`);
+    }
+
+    // show Logout function if exist username's value in localStorage
+    if (localStorage.username != "") {
+      $("#log_out").removeClass("d-none");
+    }
+
     onPage1Click();
   }
 

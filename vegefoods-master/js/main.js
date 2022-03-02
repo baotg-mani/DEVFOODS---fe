@@ -314,7 +314,7 @@ AOS.init({
 
 	function makeTimer() {
 
-		var endTime = new Date("21 December 2019 9:56:00 GMT+01:00");
+		var endTime = new Date("21 March 2022 9:56:00 GMT+07:00");
 		endTime = (Date.parse(endTime) / 1000);
 
 		var now = new Date();
@@ -345,17 +345,3 @@ AOS.init({
 })(jQuery);
 
 
-$(document).ready(function () {
-	/*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
-
-	/*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */
-	onPageLoading();
-
-	/*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
-	function onPageLoading() {
-
-	}
-
-	/*** REGION 4 - Common funtions - Vùng khai báo hàm dùng chung trong toàn bộ chương trình*/
-
-});
