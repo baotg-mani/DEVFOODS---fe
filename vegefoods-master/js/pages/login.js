@@ -351,7 +351,8 @@ AOS.init({
 //-------------------------------------------
 "use strict";
 /*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
-const gTOKEN = getCookie("token"); //get token on Cookie
+var gToken = getCookie("token"); //get token on Cookie
+var gCartArr = [];
 const gURL_LOGIN = "http://localhost:8080/login";
 
 
@@ -368,20 +369,53 @@ $(document).ready(function () {
 
   // Sử dụng cách gán sự kiện này khi khối form code trong html dùng thẻ <div>
   // $("#btn-login").on("click", onBtnLoginClick);
+
+  // Gán sự kiện khi click btn Logout
+  $("#log_out").on("click", onBtnLogOutClick);
 });
 
 /*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
-// Hàm xử lý sự kiện load trang
+// Hàm xử lý các sự kiện load trang
 function onPageLoading() {
+  "use strict";
+  // check nếu chưa có cart trong localSto thì khởi tạo
+  if (localStorage.cart == undefined) {
+    localStorage.cart = "";
+  }
+
   // thu thập sp trong cart ở localStorage
-  gCartArr = JSON.parse(localStorage.cart);
+  if (localStorage.cart != "") {
+    gCartArr = JSON.parse(localStorage.cart);
+  }
   console.log(gCartArr);
+
   // hiển thị lên icon cart thông báo
   $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
+
+  // show html "Login" nếu username in local chưa đc tạo
+  if (localStorage.username == undefined || gToken == "") {
+    $("#dropdown05").html(`<span class="icon-user"></span> Login</a>`);
+    localStorage.username = "";
+  }
+
+  // xử lý tác vụ khi có username trong local
+  if (localStorage.username != "") {
+    // show username to navbar if exist username's value in localStorage
+    $("#dropdown05").html(`<span class="icon-user"></span> ${localStorage.username}</a>`);
+
+    // show Logout function if exist username's value in localStorage
+    $("#log_out").removeClass("d-none");
+
+    // Nếu có quyền Admin thì show button truy cập Page Admin (tính năng Phân quyền)
+    checkAdminAndHandle();
+  }
+
 }
 
-// hàm xử lý sự kiện login
+// Hàm xử lý sự kiện login
 function onBtnLoginClick() {
+  // debugger;
+  "use strict";
   //B0: khai báo đối tượng chứa dữ liệu
   var vLoginObj = {
     username: "",
@@ -399,31 +433,19 @@ function onBtnLoginClick() {
   }
 }
 
+// Hàm xử lý sự kiện click vào btn Log out
+function onBtnLogOutClick() {
+  "use strict";
+  deleteCookie("token");
+  $("#log_out").addClass("d-none");
+  $("#page_admin").addClass("d-none");
+  $("#dropdown05").html(`<span class="icon-user"></span> Login</a>`);
+}
+
 /*** REGION 4 - Common funtions - Vùng khai báo hàm dùng chung trong toàn bộ chương trình*/
 // Hàm xử lý sự kiện login get token
 function loginFunction(paramLoginObj) {
-  //--- API theo đặc tả sẽ call theo data-form chứ không phải kiểu json nên cần khai báo form-data
-  // var vFormData = new FormData();
-  // vFormData.append('email', paramLoginObj.email);
-  // vFormData.append('password', paramLoginObj.password);
-
-  // $.ajax({
-  //   type: "POST",
-  //   url: gURL_LOGIN,
-  //   data: vFormData,
-  //   contentType: false,
-  //   cache: false,
-  //   processData: false,
-  //   success: function (resObj) {
-  //     responseHandler(resObj);
-  //   },
-  //   error: function (xhr) {
-  //     // Lấy error message
-  //     var vErrMessage = xhr.responseJSON.message;
-  //     console.log(vErrMessage);
-  //   }
-  // });
-
+  "use strict";
   //--- Đây là cách call theo data-json
   $.ajax({
     url: gURL_LOGIN,
@@ -432,23 +454,58 @@ function loginFunction(paramLoginObj) {
     dataType: "json",
     contentType: "application/json; charset=utf-8",
     success: function (pRes) {
-      console.log(pRes.status);
-      alert("Login successfully!");
-      gTOKEN = pRes;
       responseHandler(pRes);
-      // chuyển snag trang User info
-      window.location.href = "/shop24h-frontend/vegefoods-master/userInfo.html"
     },
     error: function (pAjaxContext) {
-      console.log(pAjaxContext.status);
-      alert(pAjaxContext.responseText);
-      responseHandler(pAjaxContext.responseText);
+      if (pAjaxContext.status === 200) { // call success
+        alert("success");
+        gToken = pAjaxContext.responseText;
+        console.log(gToken);
+        // xử lý response (Token)
+        responseHandler(pAjaxContext.responseText);
+        // lưu username vào localStorage
+        localStorage.username = paramLoginObj.username;
+        // xử lý hiển thị
+        $("#dropdown05").html(`<span class="icon-user"></span> ${localStorage.username}</a>`);
+        $("#log_out").removeClass("d-none");
+
+        // Nếu có quyền Admin thì show button truy cập Page Admin (tính năng Phân quyền)
+        checkAdminAndHandle();
+
+      } else { // call failed
+        alert(pAjaxContext.responseText);
+      }
     }
   });
+
+  // API theo đặc tả sẽ call theo data-form chứ không phải kiểu json nên cần khai báo form-data
+  /*
+  var vFormData = new FormData();
+  vFormData.append('email', paramLoginObj.email);
+  vFormData.append('password', paramLoginObj.password);
+
+  $.ajax({
+    type: "POST",
+    url: gURL_LOGIN,
+    data: vFormData,
+    contentType: false,
+    cache: false,
+    processData: false,
+    success: function (resObj) {
+      responseHandler(resObj);
+    },
+    error: function (xhr) {
+      // Lấy error message
+      var vErrMessage = xhr.responseJSON.message;
+      console.log(vErrMessage);
+    }
+  });  */
+
 }
 
 // function to get login data on form
 function getLoginData(paramLoginObj) {
+  "use strict";
   paramLoginObj.username = $("#inp-username").val().trim();
   paramLoginObj.password = $("#inp-password").val().trim();
   // paramLoginObj.rememberUser = $('#ckb-remember-account').is(":checked");
@@ -456,6 +513,7 @@ function getLoginData(paramLoginObj) {
 
 // hàm validate dữ liệu login
 function validateLoginData(paramLoginObj) {
+  "use strict";
   if (paramLoginObj.username === "") {
     alert("Bạn cần nhập username");
     return false;
@@ -467,15 +525,34 @@ function validateLoginData(paramLoginObj) {
   return true;
 }
 
-// Hàm validate email bằng regex
-// function validateEmail(email) {
-//   const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//   return regex.test(String(email).toLowerCase());
-// }
+// Hàm validate email bằng regrex
+/*
+function validateEmail(email) {
+  const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return  */
+
+// Hàm xử lý check quyền Admin (Authorization) và xử lý sự kiện
+function checkAdminAndHandle() {
+  "use strict";
+  // Nếu có quyền Admin thì show button truy cập Page Admin (tính năng Phân quyền)
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:8080/hello4",
+    headers: { "Authorization": "Token " + gToken },
+    success: function (response) {
+      console.log(response); // 'hello admin'
+      // show btn Page Admin
+      $("#page_admin").removeClass("d-none");
+    },
+    error: function (ajaxContext) {
+      $("#page_admin").addClass("d-none");
+    }
+  });
+
+}
 
 //Xử lý object trả về khi login thành công
 function responseHandler(data) {
-  console.log('handle response');
   //Lưu token vào cookie trong 1 ngày
   setCookie("token", data, 1);
   //chuyển sang trang user infomation
@@ -484,7 +561,7 @@ function responseHandler(data) {
 
 //Hàm setCookie đã giới thiệu ở bài trước
 function setCookie(cname, cvalue, exdays) {
-  console.log('setCookie');
+  "use strict";
   var d = new Date();
   d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
   var expires = "expires=" + d.toUTCString();
@@ -493,7 +570,7 @@ function setCookie(cname, cvalue, exdays) {
 
 //Hàm get Cookie đã giới thiệu ở bài trước
 function getCookie(cname) {
-  console.log('getCookie');
+  "use strict";
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
   var ca = decodedCookie.split(';');
@@ -507,6 +584,11 @@ function getCookie(cname) {
     }
   }
   return "";
+}
+
+// Hàm delete Cookie theo name
+function deleteCookie(name) {
+  document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
 

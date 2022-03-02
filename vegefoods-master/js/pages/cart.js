@@ -378,11 +378,29 @@ $(document).ready(function () {
 
   // Hàm xử lý sự kiện load trang
   function onPageLoading() {
+    // check nếu chưa có cart trong localSto thì khởi tạo
+    if (localStorage.cart == undefined) {
+      localStorage.cart = "";
+    }
+
     // thu thập sp trong cart ở localStorage
-    gCartArr = JSON.parse(localStorage.cart);
+    if (localStorage.cart != "") {
+      gCartArr = JSON.parse(localStorage.cart);
+    }
     console.log(gCartArr);
+
     // hiển thị lên icon cart thông báo
     $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
+
+    // show username to navbar if exist username's value in localStorage
+    if (localStorage.username != "") {
+      $("#dropdown05").html(`<span class="icon-user"></span> ${localStorage.username}</a>`);
+    }
+
+    // show Logout function if exist username's value in localStorage
+    if (localStorage.username != "") {
+      $("#log_out").removeClass("d-none");
+    }
 
     // load các danh mục sp trong giỏ hàng ra danh sách
     // lấy ra mảng các phần tử riêng biệt (gDistinctArr)
@@ -419,7 +437,7 @@ $(document).ready(function () {
             <p>Far far away, behind the word mountains, far from the countries</p>
           </td>
 
-          <td class="price">
+          <td class="">
             ${gDistinctArr[i].productSize}
           </td>
 
@@ -467,8 +485,8 @@ $(document).ready(function () {
     vInpQuantityElement.val(parseInt(vInpQuantityElement.val()) + 1);
 
     // update total price of product
-    var vTotalProduct = $(paramPlus).parents("tr").children("td:nth-child(6)");  //maybe query like this
-    var vPriceProduct = $(paramPlus).closest("tr").find("td:nth-child(4)");      //or like this
+    var vTotalProduct = $(paramPlus).parents("tr").children("td:nth-child(7)");  //maybe query like this
+    var vPriceProduct = $(paramPlus).closest("tr").find("td:nth-child(5)");      //or like this
     vTotalProduct.text(parseInt(vTotalProduct.text()) + parseInt(vPriceProduct.text()));
 
     // update total cart
@@ -496,8 +514,8 @@ $(document).ready(function () {
     }
 
     // update total price of product
-    var vTotalProduct = $(paramMinus).parents("tr").children("td:nth-child(6)");  //maybe query like this
-    var vPriceProduct = $(paramMinus).closest("tr").find("td:nth-child(4)");      //or like this
+    var vTotalProduct = $(paramMinus).parents("tr").children("td:nth-child(7)");  //maybe query like this
+    var vPriceProduct = $(paramMinus).closest("tr").find("td:nth-child(5)");      //or like this
 
     // update total cart
     if (gTotal > 0 && parseInt(vTotalProduct.text()) > 0) {

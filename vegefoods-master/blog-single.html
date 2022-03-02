@@ -488,9 +488,15 @@
   <script src="js/main.js"></script>
 
   <script>
+    var gCartArr = [];
+    // check nếu chưa có cart trong localSto thì khởi tạo
+    if (localStorage.cart == undefined) {
+      localStorage.cart = "";
+    }
     // thu thập sp trong cart ở localStorage
-    gCartArr = JSON.parse(localStorage.cart);
-    console.log(gCartArr);
+    if (localStorage.cart != "") {
+      gCartArr = JSON.parse(localStorage.cart);
+    }
     // hiển thị lên icon cart thông báo
     $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
   </script>

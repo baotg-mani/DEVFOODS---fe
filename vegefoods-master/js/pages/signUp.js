@@ -318,7 +318,7 @@ AOS.init({
 
   function makeTimer() {
 
-    var endTime = new Date("21 December 2019 9:56:00 GMT+01:00");
+    var endTime = new Date("21 March 2022 9:56:00 GMT+07:00");
     endTime = (Date.parse(endTime) / 1000);
 
     var now = new Date();
@@ -350,7 +350,7 @@ AOS.init({
 //-------------------------------------------
 "use strict";
 /*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
-
+var gCartArr = [];
 
 /*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */
 $(document).ready(function () {
@@ -365,11 +365,30 @@ $(document).ready(function () {
 /*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
 // Hãm xử lý sự kiện load trang
 function onPageLoading() {
+  // check nếu chưa có cart trong localSto thì khởi tạo
+  if (localStorage.cart == undefined) {
+    localStorage.cart = "";
+  }
+
   // thu thập sp trong cart ở localStorage
-  gCartArr = JSON.parse(localStorage.cart);
+  if (localStorage.cart != "") {
+    gCartArr = JSON.parse(localStorage.cart);
+  }
   console.log(gCartArr);
+
   // hiển thị lên icon cart thông báo
   $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
+
+  // show username to navbar if exist username's value in localStorage
+  if (localStorage.username != "") {
+    $("#dropdown05").html(`<span class="icon-user"></span> ${localStorage.username}</a>`);
+  }
+
+  // show Logout function if exist username's value in localStorage
+  if (localStorage.username != "") {
+    $("#log_out").removeClass("d-none");
+  }
+
 }
 
 // Hàm xử lý sự kiện click button Sign up

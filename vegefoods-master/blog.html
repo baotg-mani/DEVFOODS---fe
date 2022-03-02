@@ -83,9 +83,9 @@
           <li class="nav-item cta cta-colored"><a id="number-of-products" href="cart.html" class="nav-link"><span
                 class="icon-shopping_cart"></span>[0]</a></li>
           <li class="nav-item active dropdown">
-            <a href="login.html" class="nav-link dropdown-toggle" id="dropown05" data-toggle="dropdown"
+            <a href="login.html" class="nav-link dropdown-toggle" id="dropdown05" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false"><span class="icon-user"></span> Login</a>
-            <div class="dropdown-menu" aria-labelledby="dropown05">
+            <div class="dropdown-menu" aria-labelledby="dropdown05">
               <a class="dropdown-item" href="login.html">Login</a>
               <a class="dropdown-item" href="signUp.html">Register</a>
               <a class="dropdown-item d-none" href="#">Log out</a>
@@ -417,11 +417,29 @@
   <script src="js/main.js"></script>
 
   <script>
+    var gCartArr = [];
+    // check nếu chưa có cart trong localSto thì khởi tạo
+    if (localStorage.cart == undefined) {
+      localStorage.cart = "";
+    }
+
     // thu thập sp trong cart ở localStorage
-    gCartArr = JSON.parse(localStorage.cart);
-    console.log(gCartArr);
+    if (localStorage.cart != "") {
+      gCartArr = JSON.parse(localStorage.cart);
+    }
+
     // hiển thị lên icon cart thông báo
     $("#number-of-products").html(`<span class="icon-shopping_cart"></span>[${gCartArr.length}]`);
+
+    // show username to navbar if exist username's value in localStorage
+    if (localStorage.username != "") {
+      $("#dropdown05").html(`<span class="icon-user"></span> ${localStorage.username}</a>`);
+    }
+
+    // show Logout function if exist username's value in localStorage
+    if (localStorage.username != "") {
+      $("#log_out").removeClass("d-none");
+    }
 
   </script>
 
