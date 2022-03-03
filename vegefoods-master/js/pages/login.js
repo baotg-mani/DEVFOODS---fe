@@ -437,6 +437,7 @@ function onBtnLoginClick() {
 function onBtnLogOutClick() {
   "use strict";
   deleteCookie("token");
+  localStorage.username = "";
   $("#log_out").addClass("d-none");
   $("#page_admin").addClass("d-none");
   $("#dropdown05").html(`<span class="icon-user"></span> Login</a>`);
@@ -458,7 +459,7 @@ function loginFunction(paramLoginObj) {
     },
     error: function (pAjaxContext) {
       if (pAjaxContext.status === 200) { // call success
-        alert("success");
+        toastr.success("login successfully &#128512;");
         gToken = pAjaxContext.responseText;
         console.log(gToken);
         // xử lý response (Token)
@@ -473,7 +474,7 @@ function loginFunction(paramLoginObj) {
         checkAdminAndHandle();
 
       } else { // call failed
-        alert(pAjaxContext.responseText);
+        toastr.error(pAjaxContext.responseText);
       }
     }
   });
@@ -515,11 +516,11 @@ function getLoginData(paramLoginObj) {
 function validateLoginData(paramLoginObj) {
   "use strict";
   if (paramLoginObj.username === "") {
-    alert("Bạn cần nhập username");
+    toastr.error("Bạn cần nhập username");
     return false;
   }
   if (paramLoginObj.password === "") {
-    alert("Bạn cần nhập password");
+    toastr.error("Bạn cần nhập password");
     return false;
   }
   return true;
