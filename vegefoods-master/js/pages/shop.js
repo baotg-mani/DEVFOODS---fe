@@ -369,7 +369,7 @@ $(document).ready(function () {
 
   } else {
     //Nếu không hỗ trợ
-    alert('Trình duyệt của bạn không hỗ trợ Storage');
+    toastr.error('Trình duyệt của bạn không hỗ trợ Storage');
   }
 
 
@@ -894,7 +894,7 @@ $(document).ready(function () {
     // thu thập dữ liệu input
     var vInput = $("#inp-product-name").val().trim();
     if (vInput === "") {
-      alert("chưa điền thông tin");
+      toastr.warning("input is empty");
       return;
     }
     var vFilterResult = [];

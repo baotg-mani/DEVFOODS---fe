@@ -17,12 +17,17 @@ var gTable = $("#customer-table").DataTable({
     { "data": "lastName" },
     { "data": "phoneNumber" },
     { "data": "postalCode" },
+    { "data": "user" },
     { "data": "salesRepEmployeeNumber" },
     { "data": "state" }
   ],
   columnDefs: [
     {
-      targets: 11,
+      targets: 9,
+      render: (data) => data.id
+    },
+    {
+      targets: 12,
       defaultContent:
         `
         <button style="color:deepskyblue" class='btn btn-outline-light btn-sm edit'>
@@ -93,6 +98,9 @@ $(document).ready(function () {
   $(document).on("click", ".order", function () {
     onBtnShowOrdersClick(this);
   });
+
+  // gán sự kiện click vào btn Export Excel
+  $("#btn_excel").on("click", onBtnExcelClick);
 });
 
 /*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
@@ -260,6 +268,11 @@ function onBtnShowOrdersClick(paramBtn) {
   // gọi và truyền customerId sang trang Order
   var vUrlOrderToOpen = "crudOrder.html" + "?customerId=" + gCustomerId;
   window.location.href = vUrlOrderToOpen;
+}
+
+// Hàm xử lý sự kiện click btn Export Excel
+function onBtnExcelClick() {
+  window.location.href = "http://localhost:8080/export/customers/excel";
 }
 
 

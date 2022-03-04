@@ -84,6 +84,10 @@ $(document).ready(function () {
 
   // gán sự kiện khi ẩn modal add-edit đi (sự kiện reset data)
   $("#modal-add-edit-orderDetail").on("hidden.bs.modal", resetData);
+
+  // gán sự kiện click vào btn Export Excel
+  $("#btn_excel").on("click", onBtnExcelClick);
+
 });
 
 /*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
@@ -222,6 +226,12 @@ function onConfirmDelOneClick() {
     }
   });
 }
+
+// Hàm xử lý sự kiện click btn Export Excel
+function onBtnExcelClick() {
+  window.location.href = "http://localhost:8080/export/orderDetails/excel";
+}
+
 
 /*** REGION 4 - Common funtions - Vùng khai báo hàm dùng chung trong toàn bộ chương trình*/
 // Hàm xử lý load data lên DataTable

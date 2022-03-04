@@ -414,11 +414,11 @@ function onBtnSignUpClick() {
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify(vSignUpData),
       success: function (pRes) {
-        alert("sign-up successfully");
+        toastr.success("sign-up successfully &#128512;");
         console.log(pRes)
       },
       error: function (pAjaxContext) {
-        alert(pAjaxContext.responseJSON.message);
+        toastr.error(pAjaxContext.responseJSON.message);
         console.log(pAjaxContext.responseJSON.message);
       }
     });
@@ -450,24 +450,24 @@ function validateData(paramSignUpObj) {
   //   return false;
   // }
   if (paramSignUpObj.username === "") {
-    alert("Invalid username");
+    toastr.error("Invalid username");
     console.log("Invalid username");
     return false;
   }
   if (paramSignUpObj.password === "") {
-    alert("Invalid password!");
+    toastr.error("Invalid password!");
     console.log("Invalid password!");
     return false;
   }
   let vConfirmPass = $("#re-input-password").val().trim();
   if (vConfirmPass === "" || vConfirmPass !== paramSignUpObj.password) {
-    alert("Password not confirmed!");
+    toastr.error("Password not confirmed!");
     console.log("Password not confirmed!");
     return false;
   }
   let vEccept = $("#checkbox-accept").is(":checked");
   if (vEccept === false) {
-    alert("Need to accept Temrs and Policy to sign up completely.")
+    toastr.error("Need to accept Temrs and Policy to sign up completely.")
     console.log("Need to accept Temrs and Policy to sign up completely.");
     return false;
   }

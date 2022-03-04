@@ -428,21 +428,21 @@ $(document).ready(function () {
       requiredDate: "",
       status: "open"
     };
+    var vUsername = "";
 
     //B1: Thu thập dữ liệu
     getDataOnForm(vCustomerObj, vOrderObj);
-    console.log(vCustomerObj)
-    console.log(vOrderObj)
+    vUsername = localStorage.username;
 
     //B2: Validate dữ liệu
-    var vIsDataValid = validateData(vCustomerObj, vOrderObj);
+    var vIsDataValid = validateData(vCustomerObj, vOrderObj, vUsername);
     if (vIsDataValid) {
 
       //B3: call API POST dữ liệu Customer và Order vào DB
       // POST Customer
       $.ajax({
         type: "POST",
-        url: "http://localhost:8080/customer",
+        url: "http://localhost:8080/customer" + "/" + vUsername,
         data: JSON.stringify(vCustomerObj),
         dataType: "json",
         contentType: "application/json; charset=utf-8",
@@ -452,76 +452,82 @@ $(document).ready(function () {
 
           if (Number.isInteger(response)) { // Trường hợp sđt khách hàng đã tồn tại
             gCustomerId = response;
-            alert("Existed phone number, just updated customer infomation.");
+            toastr.success("Existed phone number, just updated customer infomation.");
 
           } else { // Trường hợp là sđt mới
-            gCustomerId = response[response.length - 1].id;
+            gCustomerId = response.id;
           }
         },
         error: function (ajaxContext) {
-          alert(ajaxContext.responseText);
+          toastr.error(ajaxContext.responseText);
+          console.log(ajaxContext.responseText);
         }
       });
 
       // POST Order
-      $.ajax({
-        type: "POST",
-        url: "http://localhost:8080/order/" + gCustomerId,
-        data: JSON.stringify(vOrderObj),
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        async: false,
-        success: function (responseArr) {
-          console.log(responseArr)
-          gOrderId = responseArr[responseArr.length - 1].id;
-          alert("Order is placed! ^^");
-        },
-        error: function (ajaxContext) {
-          alert(ajaxContext.responseText);
-        }
-      });
-
-      // duyệt các phần tử trong localStorage lấy ra mảng các phần tử riêng biệt
-      for (let i = 0; i < gCartArr.length; i++) {
-        for (let j = 0; j <= i; j++) {
-          if (j == i) {
-            gDistinctArr.push(gCartArr[i]);
-          }
-          if (gCartArr[i].id == gCartArr[j].id) {
-            break;
-          }
-        }
-      }
-
-      // lặp đếm các phần tử cùng id và in ra danh sách các phần tử (sản phẩm) ra front-end
-      for (let i = 0; i < gDistinctArr.length; i++) {
-        var count = 0;
-        for (let j = 0; j < gCartArr.length; j++) {
-          if (gCartArr[j].id == gDistinctArr[i].id) {
-            count++;
-          }
-        }
-        // POST Order Details
-        var vOrderDetailObj = {
-          priceEach: gDistinctArr[i].buyPrice,
-          quantityOrder: count
-        }
+      if (gCustomerId != null) {
         $.ajax({
           type: "POST",
-          url: "http://localhost:8080/order-detail/" + gOrderId + "/" + gDistinctArr[i].id,
-          data: JSON.stringify(vOrderDetailObj),
+          url: "http://localhost:8080/order/" + gCustomerId,
+          data: JSON.stringify(vOrderObj),
           dataType: "json",
           contentType: "application/json; charset=utf-8",
-          success: function (response) {
-            console.log(response)
-            // alert("Order is placed! ^^");
+          async: false,
+          success: function (responseArr) {
+            console.log(responseArr)
+            gOrderId = responseArr[responseArr.length - 1].id;
+            toastr.success("Order is placed! &#128512;");
           },
           error: function (ajaxContext) {
-            alert(ajaxContext.responseText);
+            toastr.error(ajaxContext.responseText);
+            console.log(ajaxContext.responseText);
           }
         });
       }
+
+      if (gOrderId != null) {
+        // duyệt các phần tử trong localStorage lấy ra mảng các phần tử riêng biệt
+        for (let i = 0; i < gCartArr.length; i++) {
+          for (let j = 0; j <= i; j++) {
+            if (j == i) {
+              gDistinctArr.push(gCartArr[i]);
+            }
+            if (gCartArr[i].id == gCartArr[j].id) {
+              break;
+            }
+          }
+        }
+
+        // lặp đếm các phần tử cùng id và in ra danh sách các phần tử (sản phẩm) ra front-end
+        for (let i = 0; i < gDistinctArr.length; i++) {
+          var count = 0;
+          for (let j = 0; j < gCartArr.length; j++) {
+            if (gCartArr[j].id == gDistinctArr[i].id) {
+              count++;
+            }
+          }
+          // POST Order Details
+          var vOrderDetailObj = {
+            priceEach: gDistinctArr[i].buyPrice,
+            quantityOrder: count
+          }
+          $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/order-detail/" + gOrderId + "/" + gDistinctArr[i].id,
+            data: JSON.stringify(vOrderDetailObj),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+              console.log(response)
+            },
+            error: function (ajaxContext) {
+              toastr.error(ajaxContext.responseText);
+            }
+          });
+        }
+      }
     }
+    resetData();
   }
 
 
@@ -541,28 +547,38 @@ $(document).ready(function () {
   }
 
   // Hàm validate dữ liệu
-  function validateData(paramCustomerObj, paramOrderObj) {
+  function validateData(paramCustomerObj, paramOrderObj, paramUsername) {
     if (paramCustomerObj.firstName == "") {
-      alert("firstName not found!");
+      toastr.error("firstName not found!");
       return false;
     }
     if (paramCustomerObj.lastName == "") {
-      alert("lastName not found!");
+      toastr.error("lastName not found!");
       return false;
     }
     if (paramCustomerObj.phoneNumber == "") {
-      alert("phoneNumber not found!");
+      toastr.error("phoneNumber not found!");
       return false;
     }
     if (paramOrderObj.orderDate == "") {
-      alert("orderDate not found!");
+      toastr.error("orderDate not found!");
       return false;
     }
     if (paramCustomerObj.requiredDate == "") {
-      alert("requiredDate not found!");
+      toastr.error("requiredDate not found!");
+      return false;
+    }
+    if (paramUsername == "") {
+      toastr.error("You need to login to create an order!");
       return false;
     }
     return true;
+  }
+
+  // Hàm reset data
+  function resetData() {
+    gCustomerId = null;
+    gOrderId = null;
   }
 
 });

@@ -501,7 +501,7 @@ $(document).ready(function () {
     var vQuantity = parseInt($("#quantity").val());
     // B2: validate 
     if (vQuantity === 0) {
-      alert("Haven't selected any products yet");
+      toastr.warning("Haven't selected any products yet");
       return;
     }
     // B3: xử lý dự liệu
