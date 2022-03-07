@@ -93,6 +93,14 @@ $(document).ready(function () {
   // gán sự kiện click vào btn Export Excel
   $("#btn_excel").on("click", onBtnExcelClick);
 
+  // gán sự kiện click vào btn Upload Image (#input-file)
+  // $("#input-file").change(function (e) {
+  //   loadFile(e);
+  // });
+
+  $("#input-file").change(function (e) {
+    loadFile(e);
+  });
 });
 
 /*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
@@ -249,6 +257,20 @@ function onBtnExcelClick() {
   window.location.href = "http://localhost:8080/export/products/excel";
 }
 
+// Hàm xử lý sự kiện load image khi click btn Upload Image
+function loadFile(e) {
+  var vImage = $("#output-image");
+  console.log($("#input-file").val().slice(12));
+  for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+    var file = e.originalEvent.srcElement.files[i];
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      vImage.attr('src', reader.result).width(200);
+    }
+    reader.readAsDataURL(file);
+  }
+}
+
 
 /*** REGION 4 - Common funtions - Vùng khai báo hàm dùng chung trong toàn bộ chương trình*/
 // Hàm xử lý load data lên DataTable
@@ -296,7 +318,7 @@ function getDataOnForm(paramObj) {
   paramObj.productName = $("#input-productName").val();
   paramObj.productDescription = $("#input-productDescription").val();
   paramObj.productSize = $("#input-productSize").val();
-  paramObj.image = $("#input-image").val();
+  paramObj.image = "images/" + $("#input-file").val().slice(12);
   paramObj.productVendor = $("#input-productVendor").val();
   paramObj.quantityInStock = parseInt($("#input-quantityInStock").val());
   paramObj.buyPrice = parseInt($("#input-buyPrice").val());

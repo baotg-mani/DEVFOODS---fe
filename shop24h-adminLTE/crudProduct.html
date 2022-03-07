@@ -358,10 +358,20 @@
                 </div>
                 <div class="row form-group">
                   <div class="col-sm-4">
-                    <label>image</label>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label>image</label>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="file" id="input-file" accept="image/*" name="image" required
+                          style="display: none;" />
+                        <p><label class="btn text-white border" for="input-file" style="cursor: pointer;">Upload</label>
+                        </p>
+                      </div>
+                    </div>
                   </div>
                   <div class="col-sm-8">
-                    <textarea id="input-image" type="text" class="form-control" placeholder="image ..."></textarea>
+                    <p><img id="output-image" src="/shop24h-frontend/vegefoods-master/images/empty.jpg" width="200"></p>
                   </div>
                 </div>
                 <div class="row form-group">
