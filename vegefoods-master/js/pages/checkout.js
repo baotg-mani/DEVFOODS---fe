@@ -564,7 +564,7 @@ $(document).ready(function () {
       toastr.error("orderDate not found!");
       return false;
     }
-    if (paramCustomerObj.requiredDate == "") {
+    if (paramOrderObj.requiredDate == "") {
       toastr.error("requiredDate not found!");
       return false;
     }

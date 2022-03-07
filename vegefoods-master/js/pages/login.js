@@ -539,6 +539,7 @@ function checkAdminAndHandle() {
   $.ajax({
     type: "GET",
     url: "http://localhost:8080/hello4",
+    // gắn kèm token vào Header để xác thực
     headers: { "Authorization": "Token " + gToken },
     success: function (response) {
       console.log(response); // 'hello admin'

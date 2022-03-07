@@ -61,6 +61,7 @@ var gFormMode = gNORMAL_MODE;
 
 var gCustomerId = null;
 
+
 /*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */
 $(document).ready(function () {
   onPageLoading();
@@ -102,6 +103,7 @@ $(document).ready(function () {
   // gán sự kiện click vào btn Export Excel
   $("#btn_excel").on("click", onBtnExcelClick);
 });
+
 
 /*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
 // Ham xu ly su kien load Page
@@ -235,10 +237,14 @@ function onConfirmDelOneClick() {
     type: "DELETE",
     url: "http://localhost:8080/customer" + "/" + gCustomerId,
     success: function (res) {
+      console.log(res);
       loadAllDataToTable();
       resetData();
       $("#modal-delete").modal("hide");
-      toastr.success("DELETE thành công   &#128519;");
+      toastr.success(res + " &#128519;");
+    },
+    error: function (ajaxContext) {
+      return ajaxContext.responseText;
     }
   });
 }
