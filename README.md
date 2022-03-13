@@ -16,6 +16,4 @@
 - [ ] [Admin page](#): Manage customer, product, order list. View chart report. Export dashboard to Excel
 
 
-/github/watchers/:user/:repo?label=Watch
-
 
